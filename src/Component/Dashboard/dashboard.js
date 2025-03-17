@@ -14,13 +14,20 @@ import {
 } from "recharts";
 import dashboardBanner from "../../Assets/dashboardBanner.png";
 import moment from "moment";
-function Dashboard({ notifications, leads, latestAction, allLeads }) {
+function Dashboard({
+  notifications,
+  leads,
+  latestAction,
+  allLeads,
+  missedLeads,
+}) {
   const freshLeads = leads.filter(
     (lead) => Array.isArray(lead.action) && lead.action.length === 0
   ).length;
 
   const notificationsLead = notifications.length;
-  const totalLeads = freshLeads + notificationsLead;
+  const missedLead = missedLeads.length;
+  const totalLeads = freshLeads + notificationsLead + missedLead;
 
   const [chartData, setChartData] = useState([]);
 
@@ -171,6 +178,10 @@ function Dashboard({ notifications, leads, latestAction, allLeads }) {
             <li>
               <span className="font-semibold">{notificationsLead}</span>{" "}
               Follow-Up Leads
+            </li>
+            <li>
+              <span className="font-semibold">{missedLead}</span> Follow-Up
+              Leads
             </li>
           </ul>
         </div>

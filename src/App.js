@@ -17,6 +17,7 @@ function App() {
   const [latestAction, setLatestAction] = useState([]);
   const [closed, setClosed] = useState([]);
   const [allLeads, setAllLeads] = useState([]);
+  const [missedLeads, setMissedLeads] = useState([]);
   // Fetch data when the component mounts
   useEffect(() => {
     // Fetch leads from the backend API
@@ -133,6 +134,24 @@ function App() {
 
     fetchLeads();
   }, []);
+  useEffect(() => {
+    // Fetch leads from the backend API
+    const fetchLeads = async () => {
+      try {
+        const response = await fetch(`${BASEURL}/missed-leads`);
+        const data = await response.json();
+        if (response.ok) {
+          setMissedLeads(data);
+        } else {
+          console.error("Error fetching leads", data);
+        }
+      } catch (error) {
+        console.error("Error fetching leads:", error);
+      }
+    };
+
+    fetchLeads();
+  }, []);
   return (
     <>
       <div className="hidden w-full h-fit lg:block">
@@ -150,6 +169,7 @@ function App() {
                     leads={leads}
                     allLeads={allLeads}
                     latestAction={latestAction}
+                    missedLeads={missedLeads}
                   />
                 }
               />
@@ -161,6 +181,12 @@ function App() {
                 path="/follow-up-leads"
                 element={
                   <FollowUpLeads leads={leads} heading={"Follow Up Leads"} />
+                }
+              />
+              <Route
+                path="/missed-leads"
+                element={
+                  <FollowUpLeads leads={missedLeads} heading={"Missed Leads"} />
                 }
               />
               <Route

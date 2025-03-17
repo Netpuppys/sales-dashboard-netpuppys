@@ -21,7 +21,7 @@ const SidebarComp = () => {
   };
 
   return (
-    <div className={`fixed w-60 top-0 h-screen bg-[#a1a1a1]`}>
+    <div className={`fixed w-60 top-0 h-screen bg-[#1d1d1d]`}>
       <div className="w-full h-full relative">
         <div className="w-full h-fit border-b-2 border-[#fff] flex items-center justify-start gap-4 px-8">
           <img src={logo} alt="" className="w-fit mx-auto h-fit" />
@@ -30,13 +30,13 @@ const SidebarComp = () => {
           {sidebarItems.map((item, id) => (
             <div key={id} className="w-full h-fit">
               <button className="flex items-center py-2 gap-2">
-                <a href={item.linkTo} className={`text-xl`}>
+                <a href={item.linkTo} className={`text-xl text-white`}>
                   {item.name}
                 </a>
               </button>
             </div>
           ))}
-          <button onClick={handleLogout} className="py-2 text-xl">
+          <button onClick={handleLogout} className="py-2 text-xl text-white">
             Log Out
           </button>
         </div>

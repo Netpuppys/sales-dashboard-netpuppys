@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BASEURL from "../BaseURL";
 import axios from "axios";
-import logo from "../Assets/logo.png";
+import logo from "../Assets/logoBlack.png";
 function Login() {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,6 +29,7 @@ function Login() {
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("name", response.data.name);
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("role", response.data.role);
         // Handle any success response if needed
         alert(`Welcome ${localStorage.getItem("name")}`, {
           position: "top-center",

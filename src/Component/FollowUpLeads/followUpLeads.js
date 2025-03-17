@@ -69,64 +69,93 @@ function FollowUpLeads({ leads, heading, action = true }) {
                   (lead) =>
                     Array.isArray(lead.action) && lead.action.length !== 0
                 )
-                .map((lead, index) => (
-                  <tr
-                    key={index}
-                    className="border-b hover:bg-[#ececec] text-sm"
-                  >
-                    <td className="p-3">{lead.name}</td>
-                    <td className="p-3 underline text-blue-500">
-                      <a href={`mailto:${lead.email}`}>{lead.email}</a>
-                    </td>
-                    <td className="p-3 underline text-blue-500">
-                      <a href={`tel:${lead.phone}`}>{lead.phone}</a>
-                    </td>
-                    <td className="p-3">
-                      {lead.action
-                        .sort(
-                          (a, b) =>
-                            new Date(b.createdAt) - new Date(a.createdAt)
-                        )
-                        .at(0)?.createdAt &&
-                        formatDate(lead.action.at(0)?.createdAt)}
-                    </td>
-                    <td className="p-3">
-                      {lead.action
-                        .sort(
-                          (a, b) =>
-                            new Date(b.createdAt) - new Date(a.createdAt)
-                        )
-                        .at(0)?.createdAt &&
-                        formatTime(lead.action.at(0)?.createdAt)}
-                    </td>
-                    <td className="p-3">
-                      {
-                        lead.action
+                .sort((a, b) => {
+                  const latestActionA = a.action
+                    .slice()
+                    .sort(
+                      (x, y) => new Date(y.createdAt) - new Date(x.createdAt)
+                    )[0];
+                  const latestActionB = b.action
+                    .slice()
+                    .sort(
+                      (x, y) => new Date(y.createdAt) - new Date(x.createdAt)
+                    )[0];
+
+                  return (
+                    new Date(latestActionB?.createdAt) -
+                    new Date(latestActionA?.createdAt)
+                  );
+                })
+                .map((lead, index) => {
+                  const latestAction = lead.action
+                    .slice()
+                    .sort(
+                      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                    )[0];
+                  return (
+                    <tr
+                      key={index}
+                      className="border-b hover:bg-[#ececec] text-sm"
+                    >
+                      <td className="p-3">{lead.name}</td>
+                      <td className="p-3 underline text-blue-500">
+                        <a href={`mailto:${lead.email}`}>{lead.email}</a>
+                      </td>
+                      <td className="p-3 underline text-blue-500">
+                        <a
+                          href={`https://api.whatsapp.com/send?phone=91${lead.phone}`}
+                          target="_blank"
+                        >
+                          {lead.phone}
+                        </a>
+                      </td>
+                      <td className="p-3">
+                        {lead.action
                           .sort(
                             (a, b) =>
                               new Date(b.createdAt) - new Date(a.createdAt)
                           )
-                          .at(0)?.actionBy
-                      }
-                    </td>
-                    <th
-                      onClick={() => handleHistory(lead)}
-                      className="p-3 text-blue-500 underline cursor-pointer"
-                    >
-                      View History
-                    </th>
-                    {action && (
-                      <td className="p-3">
-                        <button
-                          onClick={() => handleAction(lead._id)}
-                          className="px-4 py-2 disabled:bg-[#E1E3EA] disabled:border-[#E1E3EA] disabled:text-white hover:bg-transparent hover:text-accent-blue border border-accent-blue text-white text-nowrap bg-accent-blue rounded-lg font-medium leading-[1.25rem] text-sm"
-                        >
-                          Take Action
-                        </button>
+                          .at(0)?.createdAt &&
+                          formatDate(lead.action.at(0)?.createdAt)}
                       </td>
-                    )}
-                  </tr>
-                ))}
+                      <td className="p-3">
+                        {lead.action
+                          .sort(
+                            (a, b) =>
+                              new Date(b.createdAt) - new Date(a.createdAt)
+                          )
+                          .at(0)?.createdAt &&
+                          formatTime(lead.action.at(0)?.createdAt)}
+                      </td>
+                      <td className="p-3">
+                        {
+                          lead.action
+                            .sort(
+                              (a, b) =>
+                                new Date(b.createdAt) - new Date(a.createdAt)
+                            )
+                            .at(0)?.actionBy
+                        }
+                      </td>
+                      <th
+                        onClick={() => handleHistory(lead)}
+                        className="p-3 text-blue-500 underline cursor-pointer"
+                      >
+                        View History
+                      </th>
+                      {action && (
+                        <td className="p-3">
+                          <button
+                            onClick={() => handleAction(lead._id)}
+                            className="px-4 py-2 disabled:bg-[#E1E3EA] disabled:border-[#E1E3EA] disabled:text-white hover:bg-transparent hover:text-accent-blue border border-accent-blue text-white text-nowrap bg-accent-blue rounded-lg font-medium leading-[1.25rem] text-sm"
+                          >
+                            Take Action
+                          </button>
+                        </td>
+                      )}
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>

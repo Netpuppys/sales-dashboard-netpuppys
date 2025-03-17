@@ -63,7 +63,12 @@ function FreshLeads({ leads }) {
                       <a href={`mailto:${lead.email}`}>{lead.email}</a>
                     </td>
                     <td className="p-3 underline text-blue-500">
-                      <a href={`tel:${lead.phone}`}>{lead.phone}</a>
+                      <a
+                        href={`https://api.whatsapp.com/send?phone=91${lead.phone}`}
+                        target="_blank"
+                      >
+                        {lead.phone}
+                      </a>
                     </td>
                     <td className="p-3">{lead.budget || "N/A"}</td>
                     <td className="p-3">{lead.service || "N/A"}</td>

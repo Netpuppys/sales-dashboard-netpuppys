@@ -142,7 +142,10 @@ const TakeAction = ({ actionId, setActionId }) => {
               </button>
             </div>
 
-            <div className="w-full h-[calc(100%-4.75rem)] overflow-y-auto">
+            <form
+              onSubmit={() => handleSubmit(actionId)}
+              className="w-full h-[calc(100%-4.75rem)] overflow-y-auto"
+            >
               {actionId && (
                 <div className="p-6 flex h-full flex-col justify-start items-end mx-auto bg-white rounded-lg">
                   {/* Name Input */}
@@ -156,6 +159,7 @@ const TakeAction = ({ actionId, setActionId }) => {
                       onChange={handleOnChange}
                       name="connectionStatus"
                       className="mt-1 p-2 border border-gray-300 focus:outline-none rounded-lg"
+                      required
                     >
                       <option value="">Select</option>
                       <option value="Connected">Connected</option>
@@ -176,6 +180,7 @@ const TakeAction = ({ actionId, setActionId }) => {
                       value={formData.connectedVia}
                       name="connectedVia"
                       onChange={handleConnectedViaChange}
+                      required
                     >
                       <option value="">Select</option>
                       <option value="Email">Email</option>
@@ -195,6 +200,7 @@ const TakeAction = ({ actionId, setActionId }) => {
                       onChange={handleOnChange}
                       name="clientStage"
                       className="mt-1 p-2 border border-gray-300 focus:outline-none rounded-lg"
+                      required
                     >
                       <option value="">Select</option>
                       <option value="Cold">Cold</option>
@@ -223,6 +229,7 @@ const TakeAction = ({ actionId, setActionId }) => {
                         name="remarks"
                         placeholder={"Remarks"}
                         className="mt-1 bg-white h-[250px] mb-10"
+                        required
                       />
                     </div>
                   </div>
@@ -237,6 +244,7 @@ const TakeAction = ({ actionId, setActionId }) => {
                       onChange={handleOnChange}
                       name="nextFollowUp"
                       className="mt-1 p-2 border border-gray-300 focus:outline-none rounded-lg"
+                      required
                     >
                       <option value="">Select</option>
                       <option value="Today">Today</option>
@@ -253,7 +261,7 @@ const TakeAction = ({ actionId, setActionId }) => {
                   {/* Submit Button */}
                   <div className="h-full w-full items-end flex justify-end ">
                     <button
-                      onClick={() => handleSubmit(actionId)}
+                      type="submit"
                       className="px-4 py-2 disabled:bg-[#E1E3EA] disabled:border-[#E1E3EA] disabled:text-white hover:bg-transparent hover:text-accent-blue border border-accent-blue text-white text-nowrap bg-accent-blue rounded-lg font-medium leading-[1.25rem] text-sm mb-10"
                     >
                       Save
@@ -261,7 +269,7 @@ const TakeAction = ({ actionId, setActionId }) => {
                   </div>
                 </div>
               )}
-            </div>
+            </form>
           </div>
         </div>
       )}
