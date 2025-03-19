@@ -163,12 +163,12 @@ function Dashboard({
     <div className="w-full">
       <div className="w-full h-[7.6875rem] bg-[#a1a1a1] flex justify-between">
         <div className="h-full flex flex-col justify-between pl-8 py-3">
-          <p className="text-[#000000] text-[1.5rem] font-semibold">
+          <h1 className="text-[#000000] text-[1.5rem] font-semibold">
             Welcome {localStorage.getItem("name")}!
-          </p>
-          <p className="text-[#1a2841] text-[1.1rem] font-medium">
+          </h1>
+          <h2 className="text-[#1a2841] text-[1.1rem] font-medium">
             Here is a quick glance of your business
-          </p>
+          </h2>
         </div>
         <img src={dashboardBanner} className="" alt="" />
       </div>
