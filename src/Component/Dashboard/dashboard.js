@@ -14,6 +14,8 @@ import {
 } from "recharts";
 import dashboardBanner from "../../Assets/dashboardBanner.png";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
+
 function Dashboard({
   notifications,
   leads,
@@ -28,6 +30,12 @@ function Dashboard({
   const notificationsLead = notifications.length;
   const missedLead = missedLeads.length;
   const totalLeads = freshLeads + notificationsLead + missedLead;
+  const navigate = useNavigate();
+  const handlePieClick = (data) => {
+    if (data && data.name) {
+      navigate(`/filter-page?clientStage=${encodeURIComponent(data.name)}`);
+    }
+  };
 
   const [chartData, setChartData] = useState([]);
 
@@ -180,8 +188,7 @@ function Dashboard({
               Follow-Up Leads
             </li>
             <li>
-              <span className="font-semibold">{missedLead}</span> Follow-Up
-              Leads
+              <span className="font-semibold">{missedLead}</span> Missed Leads
             </li>
           </ul>
         </div>
@@ -201,6 +208,7 @@ function Dashboard({
               outerRadius={120}
               fill="#8884d8"
               label={renderCustomizedLabel}
+              onClick={(_, index) => handlePieClick(chartData[index])} // Handle Click
             >
               {chartData.map((_, index) => (
                 <Cell

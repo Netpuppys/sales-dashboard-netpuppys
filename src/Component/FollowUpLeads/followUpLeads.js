@@ -45,13 +45,19 @@ function FollowUpLeads({ leads, heading, action = true }) {
                 <th className="p-3 text-[#353535] font-medium">Email</th>
                 <th className="p-3 text-[#353535] font-medium">Phone Number</th>
                 <th className="p-3 text-[#353535] font-medium">
-                  Last Action Date
+                  Latest Action Date
                 </th>
                 <th className="p-3 text-[#353535] font-medium">
-                  Last Action Time
+                  Latest Action Time
                 </th>
                 <th className="p-3 text-[#353535] font-medium">
-                  Last Action Taken by
+                  Latest Action Taken by
+                </th>
+                <th className="p-3 text-[#353535] font-medium">
+                  Latest Client Stage
+                </th>
+                <th className="p-3 text-[#353535] font-medium">
+                  Next Follow Up Date
                 </th>
                 <th className="p-3 text-[#353535] font-medium">
                   View Follow Up History
@@ -136,6 +142,27 @@ function FollowUpLeads({ leads, heading, action = true }) {
                             )
                             .at(0)?.actionBy
                         }
+                      </td>
+                      <td className="p-3">
+                        {
+                          lead.action
+                            .sort(
+                              (a, b) =>
+                                new Date(b.createdAt) - new Date(a.createdAt)
+                            )
+                            .at(0)?.clientStage
+                        }
+                      </td>
+                      <td className="p-3">
+                        {(() => {
+                          return latestAction?.nextFollowUp === "close" ||
+                            latestAction?.nextFollowUp === "onboard"
+                            ? latestAction.nextFollowUp
+                            : latestAction?.nextFollowUp &&
+                              !isNaN(new Date(latestAction.nextFollowUp))
+                            ? formatDate(latestAction.nextFollowUp)
+                            : "Invalid Date";
+                        })()}
                       </td>
                       <th
                         onClick={() => handleHistory(lead)}

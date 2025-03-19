@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import BASEURL from "../BaseURL";
 const TakeAction = ({ actionId, setActionId }) => {
   const [remarksPlaceholder, setRemarksPlaceholder] = useState("Notes");
+  const [nextFollowUpDate, setNextFollowUpDate] = useState("");
+  const [mentionClientStage, setMentionClientStage] = useState("");
   const [formData, setFormData] = useState({
     connectionStatus: "",
     connectedVia: "",
@@ -16,6 +20,7 @@ const TakeAction = ({ actionId, setActionId }) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleConnectedViaChange = (e) => {
     const value = e.target.value;
     setFormData((prev) => ({ ...prev, connectedVia: value }));
@@ -73,12 +78,22 @@ const TakeAction = ({ actionId, setActionId }) => {
 
   // Example usage
   const handleSubmit = (id) => {
+    if (formData.nextFollowUp === "calendar" && !nextFollowUpDate) {
+      alert("Please select a follow-up date.");
+      return;
+    }
     const actionData = {
       connectionStatus: formData.connectionStatus,
       connectedVia: formData.connectedVia,
-      clientStage: formData.clientStage,
+      clientStage:
+        formData.clientStage === "other"
+          ? mentionClientStage
+          : formData.clientStage,
       remarks: formData.remarks,
-      nextFollowUp: formData.nextFollowUp,
+      nextFollowUp:
+        formData.nextFollowUp === "calendar"
+          ? nextFollowUpDate
+          : formData.nextFollowUp,
       actionBy: localStorage.getItem("name"),
     };
 
@@ -211,8 +226,24 @@ const TakeAction = ({ actionId, setActionId }) => {
                       <option value="Duplicate">Duplicate</option>
                       <option value="Budget Issue">Budget Issue</option>
                       <option value="No Response">No Response</option>
+                      <option value="other">Other</option>
                     </select>
                   </div>
+                  {formData.clientStage === "other" && (
+                    <div className="flex flex-col w-full mb-4">
+                      <label className="font-medium text-[#121C2D] flex items-center gap-2">
+                        <div className="w-1 aspect-square rounded-full bg-red-500"></div>
+                        Mention Client Stage
+                      </label>
+                      <input
+                        value={mentionClientStage}
+                        onChange={(e) => setMentionClientStage(e.target.value)}
+                        name="mentionClientStage"
+                        className="mt-1 p-2 border border-gray-300 focus:outline-none rounded-lg"
+                        required
+                      />
+                    </div>
+                  )}
 
                   <div className="flex flex-col w-full mb-4">
                     <label className="font-medium text-[#121C2D] flex items-center gap-2">
@@ -247,16 +278,32 @@ const TakeAction = ({ actionId, setActionId }) => {
                       required
                     >
                       <option value="">Select</option>
-                      <option value="Today">Today</option>
-                      <option value="1 day">1 day</option>
-                      <option value="3 day">3 days</option>
-                      <option value="5 day">5 days</option>
-                      <option value="7 day">7 days</option>
-                      <option value="30 day">30 days</option>
+                      <option value="calendar">Select from Calendar</option>
                       <option value="close">Close follow-up</option>
                       <option value="onboard">Client Onboarded</option>
                     </select>
                   </div>
+
+                  {formData.nextFollowUp === "calendar" && (
+                    <div className="flex flex-col w-full mb-4">
+                      <label className="font-medium text-[#121C2D] flex items-center gap-2">
+                        <div className="w-1 aspect-square rounded-full bg-red-500"></div>
+                        Select Date
+                      </label>
+                      <Calendar
+                        onChange={(date) => {
+                          setNextFollowUpDate(date);
+                        }}
+                        value={nextFollowUpDate}
+                        minDate={new Date()}
+                        tileDisabled={({ date, view }) =>
+                          view === "month" &&
+                          (date.getDay() === 0 || date.getDay() === 6)
+                        }
+                        className="text-xl w-[60%] mx-auto my-auto"
+                      />
+                    </div>
+                  )}
 
                   {/* Submit Button */}
                   <div className="h-full w-full items-end flex justify-end ">

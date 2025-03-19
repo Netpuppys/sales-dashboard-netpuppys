@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import BASEURL from "./BaseURL";
 import FollowUpLeads from "./Component/FollowUpLeads/followUpLeads";
 import Dashboard from "./Component/Dashboard/dashboard";
+import FilterPage from "./Component/filterLead";
 
 function App() {
   const location = useLocation();
@@ -184,6 +185,10 @@ function App() {
                 }
               />
               <Route
+                path="/filter-page"
+                element={<FilterPage leads={allLeads} />}
+              />
+              <Route
                 path="/missed-leads"
                 element={
                   <FollowUpLeads leads={missedLeads} heading={"Missed Leads"} />
@@ -194,7 +199,6 @@ function App() {
                 element={
                   <FollowUpLeads
                     leads={onboarded}
-                    action={false}
                     heading={"On-Boarded Clients"}
                   />
                 }
@@ -202,11 +206,7 @@ function App() {
               <Route
                 path="/closed-leads"
                 element={
-                  <FollowUpLeads
-                    action={false}
-                    leads={closed}
-                    heading={"Closed Leads"}
-                  />
+                  <FollowUpLeads leads={closed} heading={"Closed Leads"} />
                 }
               />
               <Route

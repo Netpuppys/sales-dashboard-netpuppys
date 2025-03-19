@@ -149,7 +149,13 @@ const ViewHistory = ({ historyId, setHistoryId }) => {
                                 Next Follow Up
                               </th>
                               <td className="text-[#121C2D] border-[#353535] border-2 text-sm font-semibold p-2">
-                                {history.nextFollowUp}
+                                {history.nextFollowUp === "close" ||
+                                history.nextFollowUp === "onboard"
+                                  ? history.nextFollowUp
+                                  : history.nextFollowUp &&
+                                    !isNaN(new Date(history.nextFollowUp))
+                                  ? formatDate(history.nextFollowUp)
+                                  : "Invalid Date"}
                               </td>
                             </tr>
                           </tbody>
