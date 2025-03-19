@@ -111,6 +111,7 @@ function FollowUpLeads({ leads, heading, action = true }) {
                         <a
                           href={`https://api.whatsapp.com/send?phone=91${lead.phone}`}
                           target="_blank"
+                          rel="noreferrer noopener"
                         >
                           {lead.phone}
                         </a>
