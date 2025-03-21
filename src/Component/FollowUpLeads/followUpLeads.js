@@ -3,7 +3,6 @@ import TakeAction from "../../ui/TakeAction";
 import ViewHistory from "../../ui/ViewHistory";
 import { formatDate } from "../../utils/formatDate";
 import { formatTime } from "../../utils/formatTime";
-import { useLocation } from "react-router-dom";
 
 function FollowUpLeads({ leads, heading, action = true, date = true }) {
   const [actionId, setActionId] = useState(null);
@@ -11,7 +10,6 @@ function FollowUpLeads({ leads, heading, action = true, date = true }) {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [filteredLeads, setFilteredLeads] = useState([]);
-  const location = useLocation();
   const handleAction = (id) => {
     setActionId(id);
   };
