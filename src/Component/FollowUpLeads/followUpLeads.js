@@ -127,6 +127,9 @@ function FollowUpLeads({ leads, heading, action = true, date = true }) {
                   Next Follow Up Date
                 </th>
                 <th className="p-3 text-[#353535] font-medium">
+                  No. of Follow Ups Done
+                </th>
+                <th className="p-3 text-[#353535] font-medium">
                   View Follow Up History
                 </th>
                 {action && (
@@ -232,6 +235,9 @@ function FollowUpLeads({ leads, heading, action = true, date = true }) {
                             : "Invalid Date";
                         })()}
                       </td>
+                      <th className="p-3 text-blue-500 underline cursor-pointer">
+                        {lead.action.length}
+                      </th>
                       <th
                         onClick={() => handleHistory(lead)}
                         className="p-3 text-blue-500 underline cursor-pointer"
