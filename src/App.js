@@ -191,7 +191,11 @@ function App() {
               <Route
                 path="/missed-leads"
                 element={
-                  <FollowUpLeads leads={missedLeads} heading={"Missed Leads"} />
+                  <FollowUpLeads
+                    leads={missedLeads}
+                    date={false}
+                    heading={"Missed Leads"}
+                  />
                 }
               />
               <Route
@@ -214,6 +218,7 @@ function App() {
                 element={
                   <FollowUpLeads
                     leads={notifications}
+                    date={false}
                     heading={"Today's Follow Up"}
                   />
                 }

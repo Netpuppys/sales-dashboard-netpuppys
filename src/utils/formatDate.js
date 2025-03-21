@@ -19,7 +19,7 @@ export const formatDate = (dateString) => {
 
   // Split the formatted date to get day, month, year, and time
   const [weekday, day, month, year, time] = formattedDate.split(" ");
-
+  console.log(weekday, day, month, year, time);
   // Return the final formatted date
   return `${day} ${month} ${year}`;
 };

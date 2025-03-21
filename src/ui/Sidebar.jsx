@@ -3,10 +3,12 @@ import sidebarItems from "../data/sidebarItems";
 import logo from "../Assets/logo.png";
 import axios from "axios";
 import BASEURL from "../BaseURL";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SidebarComp = () => {
   const navigate = useNavigate(); // ✅ Now inside a component
+  const location = useLocation();
+
   const handleLogout = () => {
     axios
       .post(`${BASEURL}/logout`)
@@ -26,17 +28,29 @@ const SidebarComp = () => {
         <div className="w-full h-fit border-b-2 border-[#fff] flex items-center justify-start gap-4 px-8">
           <img src={logo} alt="" className="w-fit mx-auto h-fit" />
         </div>
-        <div className="w-full px-5 py-10 flex h-fit flex-col items-start justify-start gap-3">
+        <div className="w-full px-2 py-10 flex h-fit flex-col items-start justify-start gap-3">
           {sidebarItems.map((item, id) => (
-            <div key={id} className="w-full h-fit">
-              <button className="flex items-center py-2 gap-2">
-                <a href={item.linkTo} className={`text-xl text-white`}>
+            <div
+              key={id}
+              className={`w-full h-fit ${
+                location.pathname === item.linkTo ? "bg-white" : ""
+              }`}
+            >
+              <button className="flex items-center px-2 py-2 gap-2">
+                <a
+                  href={item.linkTo}
+                  className={`text-xl ${
+                    location.pathname === item.linkTo
+                      ? "text-black"
+                      : "text-white"
+                  }`}
+                >
                   {item.name}
                 </a>
               </button>
             </div>
           ))}
-          <button onClick={handleLogout} className="py-2 text-xl text-white">
+          <button onClick={handleLogout} className="py-2 px-2 text-xl text-white">
             Log Out
           </button>
         </div>

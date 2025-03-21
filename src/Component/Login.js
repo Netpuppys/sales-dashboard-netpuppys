@@ -6,7 +6,6 @@ import logo from "../Assets/logoBlack.png";
 function Login() {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -19,7 +18,6 @@ function Login() {
   };
 
   const handleSubmit = () => {
-    setLoading(true);
     axios
       .post(`${BASEURL}/login`, {
         email,
@@ -43,9 +41,6 @@ function Login() {
           autoClose: 3000,
         });
         console.error("Login failed", error); // Handle any error response if needed
-      })
-      .finally(() => {
-        setLoading(false);
       });
   };
   return (
