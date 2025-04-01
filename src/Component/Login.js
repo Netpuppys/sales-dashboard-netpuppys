@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import BASEURL from "../BaseURL";
 import axios from "axios";
 import logo from "../Assets/logoBlack.png";
+import { ThreeDots } from "react-loader-spinner";
 function Login() {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loading, setLoading] = useState("");
   const navigate = useNavigate();
 
   const handleemail = (e) => {
@@ -18,6 +19,7 @@ function Login() {
   };
 
   const handleSubmit = () => {
+    setLoading(true);
     axios
       .post(`${BASEURL}/login`, {
         email,
@@ -29,6 +31,7 @@ function Login() {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", response.data.role);
         // Handle any success response if needed
+        setLoading(false);
         alert(`Welcome ${localStorage.getItem("name")}`, {
           position: "top-center",
           autoClose: 3000,
@@ -36,6 +39,7 @@ function Login() {
         navigate("/dashboard");
       })
       .catch((error) => {
+        setLoading(false);
         alert("Incorrect email or Password. Try again.", {
           position: "top-center",
           autoClose: 3000,
@@ -74,6 +78,13 @@ function Login() {
       >
         Log In
       </button>
+      {loading && (
+        <div className="fixed w-screen h-screen bg-black bg-opacity-50 backdrop-blur-sm top-0 left-0 z-[9999999] flex justify-center items-center">
+          <div className="">
+            <ThreeDots color="#FFF" />
+          </div>
+        </div>
+      )}
     </form>
   );
 }

@@ -7,6 +7,7 @@ import BASEURL from "./BaseURL";
 import FollowUpLeads from "./Component/FollowUpLeads/followUpLeads";
 import Dashboard from "./Component/Dashboard/dashboard";
 import FilterPage from "./Component/filterLead";
+import { ThreeDots } from "react-loader-spinner";
 
 function App() {
   const location = useLocation();
@@ -19,24 +20,29 @@ function App() {
   const [closed, setClosed] = useState([]);
   const [allLeads, setAllLeads] = useState([]);
   const [missedLeads, setMissedLeads] = useState([]);
+  const [loading, setLoading] = useState("");
   // Fetch data when the component mounts
   useEffect(() => {
     // Fetch leads from the backend API
     const fetchLeads = async () => {
+      setLoading(true);
       try {
         const response = await fetch(`${BASEURL}/leads`);
         const data = await response.json();
         if (response.ok) {
           // Sort the leads by 'createdAt' in descending order (newest first)
+          setLoading(false);
           const sortedLeads = data.sort(
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
           );
           // Set the sorted leads data
           setLeads(sortedLeads);
         } else {
+          setLoading(false);
           console.error("Error fetching leads", data);
         }
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching leads:", error);
       }
     };
@@ -47,16 +53,20 @@ function App() {
   // Fetch data when the component mounts
   useEffect(() => {
     // Fetch leads from the backend API
+    setLoading(true);
     const fetchLeads = async () => {
       try {
         const response = await fetch(`${BASEURL}/notification`);
         const data = await response.json();
         if (response.ok) {
+          setLoading(false);
           setNotification(data);
         } else {
+          setLoading(false);
           console.error("Error fetching leads", data);
         }
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching leads:", error);
       }
     };
@@ -65,16 +75,20 @@ function App() {
   }, []);
   useEffect(() => {
     // Fetch leads from the backend API
+    setLoading(true);
     const fetchLeads = async () => {
       try {
         const response = await fetch(`${BASEURL}/onboard`);
         const data = await response.json();
         if (response.ok) {
+          setLoading(false);
           setOnboarded(data);
         } else {
+          setLoading(false);
           console.error("Error fetching leads", data);
         }
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching leads:", error);
       }
     };
@@ -84,15 +98,19 @@ function App() {
   useEffect(() => {
     // Fetch leads from the backend API
     const fetchLeads = async () => {
+      setLoading(true);
       try {
         const response = await fetch(`${BASEURL}/close`);
         const data = await response.json();
         if (response.ok) {
+          setLoading(false);
           setClosed(data);
         } else {
+          setLoading(false);
           console.error("Error fetching leads", data);
         }
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching leads:", error);
       }
     };
@@ -102,15 +120,19 @@ function App() {
   useEffect(() => {
     // Fetch leads from the backend API
     const fetchLeads = async () => {
+      setLoading(true);
       try {
         const response = await fetch(`${BASEURL}/latest-action`);
         const data = await response.json();
         if (response.ok) {
+          setLoading(false);
           setLatestAction(data);
         } else {
+          setLoading(false);
           console.error("Error fetching leads", data);
         }
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching leads:", error);
       }
     };
@@ -120,15 +142,19 @@ function App() {
   useEffect(() => {
     // Fetch leads from the backend API
     const fetchLeads = async () => {
+      setLoading(true);
       try {
         const response = await fetch(`${BASEURL}/all-leads`);
         const data = await response.json();
         if (response.ok) {
+          setLoading(false);
           setAllLeads(data);
         } else {
+          setLoading(false);
           console.error("Error fetching leads", data);
         }
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching leads:", error);
       }
     };
@@ -138,15 +164,19 @@ function App() {
   useEffect(() => {
     // Fetch leads from the backend API
     const fetchLeads = async () => {
+      setLoading(true);
       try {
         const response = await fetch(`${BASEURL}/missed-leads`);
         const data = await response.json();
         if (response.ok) {
+          setLoading(false);
           setMissedLeads(data);
         } else {
+          setLoading(false);
           console.error("Error fetching leads", data);
         }
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching leads:", error);
       }
     };
@@ -230,6 +260,13 @@ function App() {
       <h3 className="text-xl text-black text-center font-bold w-full h-screen flex justify-center items-center lg:hidden">
         Please view in Desktop Mode
       </h3>
+      {loading && (
+        <div className="fixed w-screen h-screen bg-black bg-opacity-50 backdrop-blur-sm top-0 left-0 z-[9999999] flex justify-center items-center">
+          <div className="">
+            <ThreeDots color="#FFF" />
+          </div>
+        </div>
+      )}
 
       {/* Logout button (visible only when logged in) */}
     </>

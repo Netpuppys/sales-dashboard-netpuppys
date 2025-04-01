@@ -4,10 +4,12 @@ import "react-quill/dist/quill.snow.css";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import BASEURL from "../BaseURL";
+import { ThreeDots } from "react-loader-spinner";
 const TakeAction = ({ actionId, setActionId }) => {
   const [remarksPlaceholder, setRemarksPlaceholder] = useState("Notes");
   const [nextFollowUpDate, setNextFollowUpDate] = useState("");
   const [mentionClientStage, setMentionClientStage] = useState("");
+  const [loading, setLoading] = useState("");
   const [formData, setFormData] = useState({
     connectionStatus: "",
     connectedVia: "",
@@ -45,6 +47,7 @@ const TakeAction = ({ actionId, setActionId }) => {
   };
 
   const updateAction = async (id, actionData) => {
+    setLoading(true);
     try {
       const response = await fetch(`${BASEURL}/update-action/${id}`, {
         method: "POST",
@@ -62,6 +65,7 @@ const TakeAction = ({ actionId, setActionId }) => {
 
       console.log("Action updated successfully:", result);
       setActionId(null);
+      setLoading(false);
       setFormData({
         connectionStatus: "",
         connectedVia: "",
@@ -72,6 +76,7 @@ const TakeAction = ({ actionId, setActionId }) => {
       window.location.reload();
       return result;
     } catch (error) {
+      setLoading(false);
       console.error("Error updating action:", error.message);
     }
   };
@@ -318,6 +323,13 @@ const TakeAction = ({ actionId, setActionId }) => {
               )}
             </form>
           </div>
+          {loading && (
+            <div className="fixed w-screen h-screen bg-black bg-opacity-50 backdrop-blur-sm top-0 left-0 z-[9999999] flex justify-center items-center">
+              <div className="">
+                <ThreeDots color="#FFF" />
+              </div>
+            </div>
+          )}
         </div>
       )}
     </>

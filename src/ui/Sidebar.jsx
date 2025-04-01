@@ -1,24 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import sidebarItems from "../data/sidebarItems";
 import logo from "../Assets/logo.png";
 import axios from "axios";
 import BASEURL from "../BaseURL";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 
 const SidebarComp = () => {
   const navigate = useNavigate(); // ✅ Now inside a component
   const location = useLocation();
-
+  const [loading, setLoading] = useState("");
   const handleLogout = () => {
+    setLoading(true);
     axios
       .post(`${BASEURL}/logout`)
       .then(() => {
         localStorage.removeItem("token");
         localStorage.removeItem("email");
+        setLoading(false);
         navigate("/"); // Redirect to login page
       })
       .catch((error) => {
         console.error("Logout failed", error);
+        setLoading(false);
       });
   };
 
@@ -50,11 +54,21 @@ const SidebarComp = () => {
               </button>
             </div>
           ))}
-          <button onClick={handleLogout} className="py-2 px-2 text-xl text-white">
+          <button
+            onClick={handleLogout}
+            className="py-2 px-2 text-xl text-white"
+          >
             Log Out
           </button>
         </div>
       </div>
+      {loading && (
+        <div className="fixed w-screen h-screen bg-black bg-opacity-50 backdrop-blur-sm top-0 left-0 z-[9999999] flex justify-center items-center">
+          <div className="">
+            <ThreeDots color="#FFF" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
