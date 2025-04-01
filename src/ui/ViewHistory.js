@@ -76,6 +76,10 @@ const ViewHistory = ({ historyId, setHistoryId }) => {
                   {historyId.designation || "N/A"}
                 </p>
                 <p>
+                  <span className="text-lg font-semibold">Description:-</span>{" "}
+                  {historyId.description || "N/A"}
+                </p>
+                <p>
                   <span className="text-lg font-semibold">Lead Date:-</span>{" "}
                   {formatDate(historyId.createdAt) || "N/A"}
                 </p>

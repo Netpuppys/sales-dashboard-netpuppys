@@ -39,9 +39,10 @@ function FreshLeads({ leads }) {
                 <th className="p-3 text-[#353535] font-medium">Phone Number</th>
                 <th className="p-3 text-[#353535] font-medium">Budget</th>
                 <th className="p-3 text-[#353535] font-medium">Service</th>
-                <th className="p-3 text-[#353535] font-medium">Website URL</th>
+                <th className="p-3 text-[#353535] font-medium">Website</th>
                 <th className="p-3 text-[#353535] font-medium">Start Time</th>
                 <th className="p-3 text-[#353535] font-medium">Designation</th>
+                <th className="p-3 text-[#353535] font-medium">Message</th>
                 <th className="p-3 text-[#353535] font-medium">Lead Date</th>
                 <th className="p-3 text-[#353535] font-medium">Lead Time</th>
                 <th className="p-3 text-[#353535] font-medium">Take Action</th>
@@ -76,6 +77,7 @@ function FreshLeads({ leads }) {
                     <td className="p-3">{lead.website || "N/A"}</td>
                     <td className="p-3">{lead.startTime || "N/A"}</td>
                     <td className="p-3">{lead.designation || "N/A"}</td>
+                    <td className="p-3">{lead.description || "N/A"}</td>
                     <td className="p-3">{formatDate(lead.createdAt)}</td>
                     <td className="p-3">{formatTime(lead.createdAt)}</td>
                     <td className="p-3">
