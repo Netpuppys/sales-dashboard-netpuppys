@@ -8,7 +8,6 @@ import FollowUpLeads from "./Component/FollowUpLeads/followUpLeads";
 import Dashboard from "./Component/Dashboard/dashboard";
 import FilterPage from "./Component/filterLead";
 import { ThreeDots } from "react-loader-spinner";
-
 function App() {
   const location = useLocation();
   // const navigate = useNavigate();
@@ -183,10 +182,17 @@ function App() {
 
     fetchLeads();
   }, []);
+
   return (
     <>
       <div className="hidden w-full h-fit lg:block">
-        {currentPath !== "/" && <SidebarComp />}
+        {currentPath !== "/" && (
+          <SidebarComp
+            notifications={notifications}
+            missedLeads={missedLeads}
+            leads={leads}
+          />
+        )}
         <div className={`${currentPath === "/" ? "" : "pl-60"}`}>
           <Routes>
             {/* Public Route - Login */}
@@ -272,7 +278,6 @@ function App() {
     </>
   );
 }
-
 // 🔹 ProtectedRoute Component
 const ProtectedRoute = () => {
   const token = localStorage.getItem("token");

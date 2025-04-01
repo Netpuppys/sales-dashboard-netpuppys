@@ -6,7 +6,7 @@ import BASEURL from "../BaseURL";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 
-const SidebarComp = () => {
+const SidebarComp = ({ notifications, leads, missedLeads }) => {
   const navigate = useNavigate(); // ✅ Now inside a component
   const location = useLocation();
   const [loading, setLoading] = useState("");
@@ -25,6 +25,9 @@ const SidebarComp = () => {
         setLoading(false);
       });
   };
+  const freshLeadsLength = leads.filter(
+    (lead) => Array.isArray(lead.action) && lead.action.length === 0
+  ).length;
 
   return (
     <div className={`fixed w-60 top-0 h-screen bg-[#1d1d1d]`}>
@@ -40,7 +43,7 @@ const SidebarComp = () => {
                 location.pathname === item.linkTo ? "bg-white" : ""
               }`}
             >
-              <button className="flex items-center px-2 py-2 gap-2">
+              <button className="w-full flex items-center justify-between px-2 py-2 gap-2">
                 <a
                   href={item.linkTo}
                   className={`text-xl ${
@@ -51,6 +54,39 @@ const SidebarComp = () => {
                 >
                   {item.name}
                 </a>
+                {item.linkTo === "/notifications" && (
+                  <span
+                    className={`text-xl ${
+                      location.pathname === "/notifications"
+                        ? "text-black"
+                        : "text-white"
+                    }`}
+                  >
+                    {notifications.length > 0 ? notifications.length : ""}
+                  </span>
+                )}
+                {item.linkTo === "/missed-leads" && (
+                  <span
+                    className={`text-xl ${
+                      location.pathname === "/missed-leads"
+                        ? "text-black"
+                        : "text-white"
+                    }`}
+                  >
+                    {missedLeads.length > 0 ? missedLeads.length : ""}
+                  </span>
+                )}
+                {item.linkTo === "/fresh-leads" && (
+                  <span
+                    className={`text-xl ${
+                      location.pathname === "/fresh-leads"
+                        ? "text-black"
+                        : "text-white"
+                    }`}
+                  >
+                    {freshLeadsLength > 0 ? freshLeadsLength : ""}
+                  </span>
+                )}
               </button>
             </div>
           ))}
