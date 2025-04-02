@@ -143,7 +143,7 @@ function App() {
     const fetchLeads = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${BASEURL}/all-leads`);
+        const response = await fetch(`${BASEURL}/`);
         const data = await response.json();
         if (response.ok) {
           setLoading(false);
