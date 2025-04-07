@@ -80,6 +80,14 @@ const ViewHistory = ({ historyId, setHistoryId }) => {
                   {historyId.description || "N/A"}
                 </p>
                 <p>
+                  <span className="text-lg font-semibold">Form Name:-</span>{" "}
+                  {historyId.formName || "N/A"}
+                </p>
+                <p>
+                  <span className="text-lg font-semibold">Source:-</span>{" "}
+                  {historyId.source || "N/A"}
+                </p>
+                <p>
                   <span className="text-lg font-semibold">Lead Date:-</span>{" "}
                   {formatDate(historyId.createdAt) || "N/A"}
                 </p>
