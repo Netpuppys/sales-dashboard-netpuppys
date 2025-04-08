@@ -34,20 +34,48 @@ function FreshLeads({ leads }) {
           <table className="table-auto relative border-collapse w-full text-left bg-white shadow-md rounded-md">
             <thead className="bg-[#ececec] border-b border-[#696969] text-sm">
               <tr>
-                <th className="p-3 text-[#353535] font-medium">Name</th>
-                <th className="p-3 text-[#353535] font-medium">Email</th>
-                <th className="p-3 text-[#353535] font-medium">Phone Number</th>
-                <th className="p-3 text-[#353535] font-medium">Budget</th>
-                <th className="p-3 text-[#353535] font-medium">Service</th>
-                <th className="p-3 text-[#353535] font-medium">Website</th>
-                <th className="p-3 text-[#353535] font-medium">Start Time</th>
-                <th className="p-3 text-[#353535] font-medium">Designation</th>
-                <th className="p-3 text-[#353535] font-medium">Message</th>
-                <th className="p-3 text-[#353535] font-medium">Form Name</th>
-                <th className="p-3 text-[#353535] font-medium">Source</th>
-                <th className="p-3 text-[#353535] font-medium">Lead Date</th>
-                <th className="p-3 text-[#353535] font-medium">Lead Time</th>
-                <th className="p-3 text-[#353535] font-medium">Take Action</th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Name
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Email
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Phone Number
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Budget
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Service
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Website
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Start Time
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Designation
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Message
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Form Name
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Source
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Lead Date
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Lead Time
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Take Action
+                </th>
               </tr>
             </thead>
             <tbody className="text-gray-900">

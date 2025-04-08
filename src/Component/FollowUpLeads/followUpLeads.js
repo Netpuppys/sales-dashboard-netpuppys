@@ -106,32 +106,38 @@ function FollowUpLeads({ leads, heading, action = true, date = true }) {
           <table className="table-auto relative border-collapse w-full text-left bg-white shadow-md rounded-md">
             <thead className="bg-[#ececec] border-b border-[#696969] text-sm">
               <tr>
-                <th className="p-3 text-[#353535] font-medium">Name</th>
-                <th className="p-3 text-[#353535] font-medium">Email</th>
-                <th className="p-3 text-[#353535] font-medium">Phone Number</th>
-                <th className="p-3 text-[#353535] font-medium">
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Name
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Email
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Phone Number
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Latest Action Date
                 </th>
-                <th className="p-3 text-[#353535] font-medium">
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Latest Action Time
                 </th>
-                <th className="p-3 text-[#353535] font-medium">
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Latest Action Taken by
                 </th>
-                <th className="p-3 text-[#353535] font-medium">
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Latest Client Stage
                 </th>
-                <th className="p-3 text-[#353535] font-medium">
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Next Follow Up Date
                 </th>
-                <th className="p-3 text-[#353535] font-medium">
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
                   No. of Follow Ups Done
                 </th>
-                <th className="p-3 text-[#353535] font-medium">
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
                   View Follow Up History
                 </th>
                 {action && (
-                  <th className="p-3 text-[#353535] font-medium">
+                  <th className="p-3 min-w-60 text-[#353535] font-medium">
                     Take Action
                   </th>
                 )}
