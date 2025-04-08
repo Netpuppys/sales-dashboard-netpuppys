@@ -4,7 +4,7 @@ import { formatDate } from "../../utils/formatDate";
 import { formatTime } from "../../utils/formatTime";
 function FreshLeads({ leads }) {
   const [actionId, setActionId] = useState(null);
-
+  const [expandedIndex, setExpandedIndex] = useState(null);
   const handleAction = (id) => {
     setActionId(id);
   };
@@ -107,7 +107,20 @@ function FreshLeads({ leads }) {
                     <td className="p-3">{lead.website || "N/A"}</td>
                     <td className="p-3">{lead.startTime || "N/A"}</td>
                     <td className="p-3">{lead.designation || "N/A"}</td>
-                    <td className="p-3">{lead.description || "N/A"}</td>
+                    <td
+                      className="p-3 cursor-pointer text-sm"
+                      onClick={() =>
+                        setExpandedIndex(index === expandedIndex ? null : index)
+                      }
+                    >
+                      <div
+                        className={`${
+                          expandedIndex === index ? "" : "line-clamp-2"
+                        } `}
+                      >
+                        {lead.description || "N/A"}
+                      </div>
+                    </td>
                     <td className="p-3">{lead.formName || "N/A"}</td>
                     <td className="p-3">{lead.source || "N/A"}</td>
                     <td className="p-3">{formatDate(lead.createdAt)}</td>

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
 import BASEURL from "../BaseURL";
 import { ThreeDots } from "react-loader-spinner";
 const TakeAction = ({ actionId, setActionId }) => {
@@ -63,7 +61,7 @@ const TakeAction = ({ actionId, setActionId }) => {
         throw new Error(result.error || "Failed to update action");
       }
 
-      alert.log("Action updated successfully:", result);
+      alert("Action updated successfully:", result);
       setActionId(null);
       setLoading(false);
       setFormData({
@@ -77,7 +75,7 @@ const TakeAction = ({ actionId, setActionId }) => {
       return result;
     } catch (error) {
       setLoading(false);
-      alert.error("Error updating action:", error.message);
+      alert("Error updating action:", error.message);
     }
   };
   const formatDateForInput = (date) => {
