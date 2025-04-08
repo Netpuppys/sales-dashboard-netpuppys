@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Calendar from "react-calendar";
@@ -7,7 +7,7 @@ import BASEURL from "../BaseURL";
 import { ThreeDots } from "react-loader-spinner";
 const TakeAction = ({ actionId, setActionId }) => {
   const [remarksPlaceholder, setRemarksPlaceholder] = useState("Notes");
-  const [nextFollowUpDate, setNextFollowUpDate] = useState("");
+  const [nextFollowUpDate, setNextFollowUpDate] = useState(new Date());
   const [mentionClientStage, setMentionClientStage] = useState("");
   const [loading, setLoading] = useState("");
   const [formData, setFormData] = useState({
@@ -63,7 +63,7 @@ const TakeAction = ({ actionId, setActionId }) => {
         throw new Error(result.error || "Failed to update action");
       }
 
-      console.log("Action updated successfully:", result);
+      alert("Action updated successfully:", result);
       setActionId(null);
       setLoading(false);
       setFormData({
@@ -77,9 +77,12 @@ const TakeAction = ({ actionId, setActionId }) => {
       return result;
     } catch (error) {
       setLoading(false);
-      console.error("Error updating action:", error.message);
+      alert.error("Error updating action:", error.message);
     }
   };
+  const handleDateChange = useCallback((date) => {
+    setNextFollowUpDate(date);
+  }, []);
 
   // Example usage
   const handleSubmit = (id) => {
@@ -296,9 +299,7 @@ const TakeAction = ({ actionId, setActionId }) => {
                         Select Date
                       </label>
                       <Calendar
-                        onChange={(date) => {
-                          setNextFollowUpDate(date);
-                        }}
+                        onChange={handleDateChange}
                         value={nextFollowUpDate}
                         minDate={new Date()}
                         tileDisabled={({ date, view }) =>
