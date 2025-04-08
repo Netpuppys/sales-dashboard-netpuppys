@@ -239,7 +239,7 @@ function FollowUpLeads({ leads, heading, action = true, date = true }) {
                             : "Invalid Date";
                         })()}
                       </td>
-                      <th className="p-3 text-blue-500 underline cursor-pointer">
+                      <th className="p-3">
                         {lead.action.length}
                       </th>
                       <th

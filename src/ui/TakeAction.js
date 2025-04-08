@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Calendar from "react-calendar";
@@ -7,7 +7,7 @@ import BASEURL from "../BaseURL";
 import { ThreeDots } from "react-loader-spinner";
 const TakeAction = ({ actionId, setActionId }) => {
   const [remarksPlaceholder, setRemarksPlaceholder] = useState("Notes");
-  const [nextFollowUpDate, setNextFollowUpDate] = useState(new Date());
+  const [nextFollowUpDate, setNextFollowUpDate] = useState("");
   const [mentionClientStage, setMentionClientStage] = useState("");
   const [loading, setLoading] = useState("");
   const [formData, setFormData] = useState({
@@ -63,7 +63,7 @@ const TakeAction = ({ actionId, setActionId }) => {
         throw new Error(result.error || "Failed to update action");
       }
 
-      alert("Action updated successfully:", result);
+      alert.log("Action updated successfully:", result);
       setActionId(null);
       setLoading(false);
       setFormData({
@@ -80,9 +80,13 @@ const TakeAction = ({ actionId, setActionId }) => {
       alert.error("Error updating action:", error.message);
     }
   };
-  const handleDateChange = useCallback((date) => {
-    setNextFollowUpDate(date);
-  }, []);
+  const formatDateForInput = (date) => {
+    if (!date || isNaN(date)) return "";
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // 0-indexed
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
   // Example usage
   const handleSubmit = (id) => {
@@ -298,8 +302,24 @@ const TakeAction = ({ actionId, setActionId }) => {
                         <div className="w-1 aspect-square rounded-full bg-red-500"></div>
                         Select Date
                       </label>
-                      <Calendar
-                        onChange={handleDateChange}
+                      <input
+                        type="date"
+                        value={formatDateForInput(nextFollowUpDate)}
+                        onChange={(e) => {
+                          const selectedDate = new Date(e.target.value);
+                          setNextFollowUpDate(selectedDate);
+                          console.log("Selected Date:", selectedDate);
+                        }}
+                        name="nextFollowUpDate"
+                        className="mt-1 p-2 border border-gray-300 focus:outline-none rounded-lg"
+                        required
+                      />
+
+                      {/* <Calendar
+                        onChange={(date) => {
+                          setNextFollowUpDate(date);
+                          console.log(nextFollowUpDate);
+                        }}
                         value={nextFollowUpDate}
                         minDate={new Date()}
                         tileDisabled={({ date, view }) =>
@@ -307,7 +327,7 @@ const TakeAction = ({ actionId, setActionId }) => {
                           (date.getDay() === 0 || date.getDay() === 6)
                         }
                         className="text-xl w-[60%] mx-auto my-auto"
-                      />
+                      /> */}
                     </div>
                   )}
 
