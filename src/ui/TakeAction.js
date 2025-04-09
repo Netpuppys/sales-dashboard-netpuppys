@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import BASEURL from "../BaseURL";
 import { ThreeDots } from "react-loader-spinner";
 const TakeAction = ({ actionId, setActionId }) => {
@@ -43,37 +42,6 @@ const TakeAction = ({ actionId, setActionId }) => {
     }
   };
 
-const updateAction = async (id, actionData) => {
-  setLoading(true);
-  try {
-    const response = await axios.post(`${BASEURL}/update-action/${id}`, actionData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    alert("Action updated successfully!");
-    // setActionId(null);
-    setLoading(false);
-    setFormData({
-      connectionStatus: "",
-      connectedVia: "",
-      clientStage: "",
-      remarks: "",
-      nextFollowUp: "",
-    });
-
-    return response.data;
-  } catch (error) {
-    setLoading(false);
-    const errorMessage =
-      error.response?.data?.error || error.message || "Failed to update action";
-    alert(`Error updating action: ${errorMessage}`);
-    console.error("Error caught in updateAction:", error);
-  }
-};
-
-
   const formatDateForInput = (date) => {
     if (!date || isNaN(date)) return "";
     const year = date.getFullYear();
@@ -83,12 +51,17 @@ const updateAction = async (id, actionData) => {
   };
 
   // Example usage
-  const handleSubmit = (id) => {
+  const handleSubmit = async (e, id) => {
+    e.preventDefault();
     if (formData.nextFollowUp === "calendar" && !nextFollowUpDate) {
       alert("Please select a follow-up date.");
       return;
     }
-    const actionData = {
+    setLoading(true);
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
       connectionStatus: formData.connectionStatus,
       connectedVia: formData.connectedVia,
       clientStage:
@@ -101,9 +74,39 @@ const updateAction = async (id, actionData) => {
           ? nextFollowUpDate
           : formData.nextFollowUp,
       actionBy: localStorage.getItem("name"),
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
     };
 
-    updateAction(id, actionData);
+    try {
+      const response = await fetch(
+        `${BASEURL}/update-action/${id}`,
+        requestOptions
+      );
+      const data = await response.json(); // Parse the response JSON
+
+      if (data.message) {
+        alert(data.message); // Show alert with the success message
+      }
+
+      setLoading(false);
+      setFormData({
+        connectionStatus: "",
+        connectedVia: "",
+        clientStage: "",
+        remarks: "",
+        nextFollowUp: "",
+      });
+      setActionId(null);
+    } catch (error) {
+      console.error("Error updating action:", error);
+      setLoading(false);
+    }
   };
   return (
     <>
@@ -163,10 +166,7 @@ const updateAction = async (id, actionData) => {
               </button>
             </div>
 
-            <form
-              onSubmit={() => handleSubmit(actionId)}
-              className="w-full h-[calc(100%-4.75rem)] overflow-y-auto"
-            >
+            <form className="w-full h-[calc(100%-4.75rem)] overflow-y-auto">
               {actionId && (
                 <div className="p-6 flex h-full flex-col justify-start items-end mx-auto bg-white rounded-lg">
                   {/* Name Input */}
@@ -325,7 +325,7 @@ const updateAction = async (id, actionData) => {
                   {/* Submit Button */}
                   <div className="h-full w-full items-end flex justify-end ">
                     <button
-                      type="submit"
+                      onClick={(e) => handleSubmit(e, actionId)}
                       className="px-4 py-2 disabled:bg-[#E1E3EA] disabled:border-[#E1E3EA] disabled:text-white hover:bg-transparent hover:text-accent-blue border border-accent-blue text-white text-nowrap bg-accent-blue rounded-lg font-medium leading-[1.25rem] text-sm mb-10"
                     >
                       Save
