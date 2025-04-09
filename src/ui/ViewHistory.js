@@ -56,36 +56,20 @@ const ViewHistory = ({ historyId, setHistoryId }) => {
                   <a href={`tel:${historyId.phone}`}>{historyId.phone}</a>
                 </p>
                 <p>
-                  <span className="text-lg font-semibold">Website URL:-</span>{" "}
-                  {historyId.website}
-                </p>
-                <p>
-                  <span className="text-lg font-semibold">Budget:-</span>{" "}
-                  {historyId.budget}
-                </p>
-                <p>
                   <span className="text-lg font-semibold">Service:-</span>{" "}
                   {historyId.service}
-                </p>
-                <p>
-                  <span className="text-lg font-semibold">Start Time:-</span>{" "}
-                  {historyId.startTime}
-                </p>
-                <p>
-                  <span className="text-lg font-semibold">Designation:-</span>{" "}
-                  {historyId.designation}
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Description:-</span>{" "}
                   {historyId.description}
                 </p>
                 <p>
-                  <span className="text-lg font-semibold">Form Name:-</span>{" "}
-                  {historyId.formName}
+                  <span className="text-lg font-semibold">Website URL:-</span>{" "}
+                  {historyId.website}
                 </p>
                 <p>
-                  <span className="text-lg font-semibold">Source:-</span>{" "}
-                  {historyId.source}
+                  <span className="text-lg font-semibold">Budget:-</span>{" "}
+                  {historyId.budget}
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Lead Date:-</span>{" "}
@@ -95,6 +79,24 @@ const ViewHistory = ({ historyId, setHistoryId }) => {
                   <span className="text-lg font-semibold">Lead Time:-</span>{" "}
                   {formatTime(historyId.createdAt)}
                 </p>
+                <p>
+                  <span className="text-lg font-semibold">Start Time:-</span>{" "}
+                  {historyId.startTime}
+                </p>
+                <p>
+                  <span className="text-lg font-semibold">Designation:-</span>{" "}
+                  {historyId.designation}
+                </p>
+                
+                <p>
+                  <span className="text-lg font-semibold">Form Name:-</span>{" "}
+                  {historyId.formName}
+                </p>
+                <p>
+                  <span className="text-lg font-semibold">Source:-</span>{" "}
+                  {historyId.source}
+                </p>
+                
               </div>
               {historyId.action && Array.isArray(historyId.action) ? (
                 <div className="pb-6 px-6 flex h-fit flex-col justify-start mx-auto bg-white rounded-lg">

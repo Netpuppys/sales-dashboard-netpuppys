@@ -106,6 +106,18 @@ function FollowUpLeads({ leads, heading, action = true, date = true }) {
           <table className="table-auto relative border-collapse w-full text-left bg-white shadow-md rounded-md">
             <thead className="bg-[#ececec] border-b border-[#696969] text-sm">
               <tr>
+                {action && (
+                  <th className="p-3 min-w-40 text-[#353535] font-medium">
+                    Take Action
+                  </th>
+                )}
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  No. of Follow Ups Done
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  View Follow Up History
+                </th>
+
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Name
                 </th>
@@ -130,17 +142,6 @@ function FollowUpLeads({ leads, heading, action = true, date = true }) {
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Next Follow Up Date
                 </th>
-                <th className="p-3 min-w-60 text-[#353535] font-medium">
-                  No. of Follow Ups Done
-                </th>
-                <th className="p-3 min-w-60 text-[#353535] font-medium">
-                  View Follow Up History
-                </th>
-                {action && (
-                  <th className="p-3 min-w-60 text-[#353535] font-medium">
-                    Take Action
-                  </th>
-                )}
               </tr>
             </thead>
             <tbody className="text-gray-900">
@@ -177,6 +178,25 @@ function FollowUpLeads({ leads, heading, action = true, date = true }) {
                       key={index}
                       className="border-b hover:bg-[#ececec] text-sm"
                     >
+                      {action && (
+                        <td className="p-3">
+                          <button
+                            onClick={() => handleAction(lead._id)}
+                            className="px-4 py-2 disabled:bg-[#E1E3EA] disabled:border-[#E1E3EA] disabled:text-white hover:bg-transparent hover:text-accent-blue border border-accent-blue text-white text-nowrap bg-accent-blue rounded-lg font-medium leading-[1.25rem] text-sm"
+                          >
+                            Take Action
+                          </button>
+                        </td>
+                      )}
+
+                      <th className="p-3">{lead.action.length}</th>
+                      <th
+                        onClick={() => handleHistory(lead)}
+                        className="p-3 text-blue-500 underline cursor-pointer"
+                      >
+                        View History
+                      </th>
+
                       <td className="p-3">{lead.name}</td>
                       <td className="p-3 underline text-blue-500">
                         <a href={`mailto:${lead.email}`}>{lead.email}</a>
@@ -239,25 +259,6 @@ function FollowUpLeads({ leads, heading, action = true, date = true }) {
                             : "Invalid Date";
                         })()}
                       </td>
-                      <th className="p-3">
-                        {lead.action.length}
-                      </th>
-                      <th
-                        onClick={() => handleHistory(lead)}
-                        className="p-3 text-blue-500 underline cursor-pointer"
-                      >
-                        View History
-                      </th>
-                      {action && (
-                        <td className="p-3">
-                          <button
-                            onClick={() => handleAction(lead._id)}
-                            className="px-4 py-2 disabled:bg-[#E1E3EA] disabled:border-[#E1E3EA] disabled:text-white hover:bg-transparent hover:text-accent-blue border border-accent-blue text-white text-nowrap bg-accent-blue rounded-lg font-medium leading-[1.25rem] text-sm"
-                          >
-                            Take Action
-                          </button>
-                        </td>
-                      )}
                     </tr>
                   );
                 })}

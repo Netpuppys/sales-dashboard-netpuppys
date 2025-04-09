@@ -34,6 +34,9 @@ function FreshLeads({ leads }) {
           <table className="table-auto relative border-collapse w-full text-left bg-white shadow-md rounded-md">
             <thead className="bg-[#ececec] border-b border-[#696969] text-sm">
               <tr>
+                <th className="p-3 min-w-40 text-[#353535] font-medium">
+                  Take Action
+                </th>
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Name
                 </th>
@@ -44,28 +47,16 @@ function FreshLeads({ leads }) {
                   Phone Number
                 </th>
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
-                  Budget
-                </th>
-                <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Service
-                </th>
-                <th className="p-3 min-w-60 text-[#353535] font-medium">
-                  Website
-                </th>
-                <th className="p-3 min-w-60 text-[#353535] font-medium">
-                  Start Time
-                </th>
-                <th className="p-3 min-w-60 text-[#353535] font-medium">
-                  Designation
                 </th>
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Message
                 </th>
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
-                  Form Name
+                  Website
                 </th>
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
-                  Source
+                  Budget
                 </th>
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Lead Date
@@ -74,7 +65,16 @@ function FreshLeads({ leads }) {
                   Lead Time
                 </th>
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
-                  Take Action
+                  Start Time
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Designation
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Form Name
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Source
                 </th>
               </tr>
             </thead>
@@ -89,6 +89,14 @@ function FreshLeads({ leads }) {
                     key={index}
                     className="border-b hover:bg-[#ececec] text-sm"
                   >
+                    <td className="p-3">
+                      <button
+                        onClick={() => handleAction(lead._id)}
+                        className="px-4 py-2 disabled:bg-[#E1E3EA] disabled:border-[#E1E3EA] disabled:text-white hover:bg-transparent hover:text-accent-blue border border-accent-blue text-white text-nowrap bg-accent-blue rounded-lg font-medium leading-[1.25rem] text-sm"
+                      >
+                        Take Action
+                      </button>
+                    </td>
                     <td className="p-3">{lead.name}</td>
                     <td className="p-3 underline text-blue-500">
                       <a href={`mailto:${lead.email}`}>{lead.email}</a>
@@ -102,11 +110,7 @@ function FreshLeads({ leads }) {
                         {lead.phone}
                       </a>
                     </td>
-                    <td className="p-3">{lead.budget}</td>
                     <td className="p-3">{lead.service}</td>
-                    <td className="p-3">{lead.website}</td>
-                    <td className="p-3">{lead.startTime}</td>
-                    <td className="p-3">{lead.designation}</td>
                     <td
                       className="p-3 cursor-pointer text-sm"
                       onClick={() =>
@@ -121,18 +125,14 @@ function FreshLeads({ leads }) {
                         {lead.description}
                       </div>
                     </td>
-                    <td className="p-3">{lead.formName}</td>
-                    <td className="p-3">{lead.source}</td>
+                    <td className="p-3">{lead.website}</td>
+                    <td className="p-3">{lead.budget}</td>
                     <td className="p-3">{formatDate(lead.createdAt)}</td>
                     <td className="p-3">{formatTime(lead.createdAt)}</td>
-                    <td className="p-3">
-                      <button
-                        onClick={() => handleAction(lead._id)}
-                        className="px-4 py-2 disabled:bg-[#E1E3EA] disabled:border-[#E1E3EA] disabled:text-white hover:bg-transparent hover:text-accent-blue border border-accent-blue text-white text-nowrap bg-accent-blue rounded-lg font-medium leading-[1.25rem] text-sm"
-                      >
-                        Take Action
-                      </button>
-                    </td>
+                    <td className="p-3">{lead.startTime}</td>
+                    <td className="p-3">{lead.designation}</td>
+                    <td className="p-3">{lead.formName}</td>
+                    <td className="p-3">{lead.source}</td>
                   </tr>
                 ))}
             </tbody>
