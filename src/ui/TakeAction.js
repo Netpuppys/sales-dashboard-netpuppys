@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import axios from "axios";
 import BASEURL from "../BaseURL";
 import { ThreeDots } from "react-loader-spinner";
 const TakeAction = ({ actionId, setActionId }) => {
@@ -44,40 +43,37 @@ const TakeAction = ({ actionId, setActionId }) => {
     }
   };
 
-  const updateAction = async (id, actionData) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${BASEURL}/update-action/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(actionData),
-      });
+const updateAction = async (id, actionData) => {
+  setLoading(true);
+  try {
+    const response = await axios.post(`${BASEURL}/update-action/${id}`, actionData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-      const result = await response.json();
+    alert("Action updated successfully!");
+    // setActionId(null);
+    setLoading(false);
+    setFormData({
+      connectionStatus: "",
+      connectedVia: "",
+      clientStage: "",
+      remarks: "",
+      nextFollowUp: "",
+    });
 
-      if (!response.ok) {
-        throw new Error(result.error || "Failed to update action");
-      }
+    return response.data;
+  } catch (error) {
+    setLoading(false);
+    const errorMessage =
+      error.response?.data?.error || error.message || "Failed to update action";
+    alert(`Error updating action: ${errorMessage}`);
+    console.error("Error caught in updateAction:", error);
+  }
+};
 
-      alert("Action updated successfully:", result);
-      setActionId(null);
-      setLoading(false);
-      setFormData({
-        connectionStatus: "",
-        connectedVia: "",
-        clientStage: "",
-        remarks: "",
-        nextFollowUp: "",
-      });
-      window.location.reload();
-      return result;
-    } catch (error) {
-      setLoading(false);
-      alert("Error updating action:", error.message);
-    }
-  };
+
   const formatDateForInput = (date) => {
     if (!date || isNaN(date)) return "";
     const year = date.getFullYear();
@@ -261,15 +257,12 @@ const TakeAction = ({ actionId, setActionId }) => {
                       {remarksPlaceholder}
                     </label>
                     <div className="w-full h-fit">
-                      <ReactQuill
-                        theme="snow"
+                      <textarea
                         value={formData.remarks}
-                        onChange={(value) =>
-                          setFormData((prev) => ({ ...prev, remarks: value }))
-                        }
+                        onChange={handleOnChange}
                         name="remarks"
                         placeholder={"Remarks"}
-                        className="mt-1 bg-white h-[250px] mb-10"
+                        className="mt-1 p-2 border w-full border-gray-300 focus:outline-none rounded-lg"
                         required
                       />
                     </div>
