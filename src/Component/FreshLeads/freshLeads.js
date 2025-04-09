@@ -102,11 +102,11 @@ function FreshLeads({ leads }) {
                         {lead.phone}
                       </a>
                     </td>
-                    <td className="p-3">{lead.budget || "N/A"}</td>
-                    <td className="p-3">{lead.service || "N/A"}</td>
-                    <td className="p-3">{lead.website || "N/A"}</td>
-                    <td className="p-3">{lead.startTime || "N/A"}</td>
-                    <td className="p-3">{lead.designation || "N/A"}</td>
+                    <td className="p-3">{lead.budget}</td>
+                    <td className="p-3">{lead.service}</td>
+                    <td className="p-3">{lead.website}</td>
+                    <td className="p-3">{lead.startTime}</td>
+                    <td className="p-3">{lead.designation}</td>
                     <td
                       className="p-3 cursor-pointer text-sm"
                       onClick={() =>
@@ -118,11 +118,11 @@ function FreshLeads({ leads }) {
                           expandedIndex === index ? "" : "line-clamp-2"
                         } `}
                       >
-                        {lead.description || "N/A"}
+                        {lead.description}
                       </div>
                     </td>
-                    <td className="p-3">{lead.formName || "N/A"}</td>
-                    <td className="p-3">{lead.source || "N/A"}</td>
+                    <td className="p-3">{lead.formName}</td>
+                    <td className="p-3">{lead.source}</td>
                     <td className="p-3">{formatDate(lead.createdAt)}</td>
                     <td className="p-3">{formatTime(lead.createdAt)}</td>
                     <td className="p-3">

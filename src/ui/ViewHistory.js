@@ -57,43 +57,43 @@ const ViewHistory = ({ historyId, setHistoryId }) => {
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Website URL:-</span>{" "}
-                  {historyId.website || "N/A"}
+                  {historyId.website}
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Budget:-</span>{" "}
-                  {historyId.budget || "N/A"}
+                  {historyId.budget}
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Service:-</span>{" "}
-                  {historyId.service || "N/A"}
+                  {historyId.service}
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Start Time:-</span>{" "}
-                  {historyId.startTime || "N/A"}
+                  {historyId.startTime}
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Designation:-</span>{" "}
-                  {historyId.designation || "N/A"}
+                  {historyId.designation}
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Description:-</span>{" "}
-                  {historyId.description || "N/A"}
+                  {historyId.description}
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Form Name:-</span>{" "}
-                  {historyId.formName || "N/A"}
+                  {historyId.formName}
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Source:-</span>{" "}
-                  {historyId.source || "N/A"}
+                  {historyId.source}
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Lead Date:-</span>{" "}
-                  {formatDate(historyId.createdAt) || "N/A"}
+                  {formatDate(historyId.createdAt)}
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Lead Time:-</span>{" "}
-                  {formatTime(historyId.createdAt) || "N/A"}
+                  {formatTime(historyId.createdAt)}
                 </p>
               </div>
               {historyId.action && Array.isArray(historyId.action) ? (
