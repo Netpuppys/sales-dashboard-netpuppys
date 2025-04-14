@@ -27,6 +27,10 @@ const sidebarItems = [
     name: "Closed Leads",
     linkTo: "/closed-leads",
   },
+  {
+    name: "Change Password",
+    linkTo: "/change-password",
+  },
 ];
 
 export default sidebarItems;

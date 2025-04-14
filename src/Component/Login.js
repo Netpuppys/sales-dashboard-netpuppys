@@ -4,10 +4,22 @@ import BASEURL from "../BaseURL";
 import axios from "axios";
 import logo from "../Assets/logoBlack.png";
 import { ThreeDots } from "react-loader-spinner";
+import show from "../Assets/show.png";
+import hide from "../Assets/hide.png";
 function Login() {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPassword = () => {
+    if (showPassword) {
+      setShowPassword(false);
+    } else {
+      setShowPassword(true);
+    }
+  };
+
   const navigate = useNavigate();
 
   const handleemail = (e) => {
@@ -21,7 +33,7 @@ function Login() {
   const handleSubmit = () => {
     setLoading(true);
     axios
-      .post(`${BASEURL}/login`, {
+      .post(`${BASEURL}/api/auth/login`, {
         email,
         password,
       })
@@ -64,13 +76,22 @@ function Login() {
         placeholder="Email ID"
         className="px-4 py-2 w-full max-w-[400px] border-2 border-black rounded-sm"
       />
-      <input
-        value={password}
-        onChange={handlePassword}
-        type="password"
-        placeholder="Password"
-        className="px-4 py-2 w-full max-w-[400px] border-2 border-black rounded-sm"
-      />
+      <div className="px-2 w-full flex items-center max-w-[400px] border-2 border-black rounded-sm">
+        <input
+          type={showPassword ? "text" : "password"}
+          value={password}
+          onChange={handlePassword}
+          className="w-full px-2 py-2 rounded-full focus:outline-none bg-transparent"
+          placeholder="Password"
+        />
+        <img
+          src={showPassword ? show : hide}
+          alt="admin"
+          onClick={handleShowPassword}
+          title="icon"
+          className="h-[30px] w-[30px]"
+        />
+      </div>
       {/* submit button */}
       <button
         type="submit"

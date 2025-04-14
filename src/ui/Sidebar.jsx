@@ -13,7 +13,7 @@ const SidebarComp = ({ notifications, leads, missedLeads }) => {
   const handleLogout = () => {
     setLoading(true);
     axios
-      .post(`${BASEURL}/logout`)
+      .post(`${BASEURL}/api/auth/logout`)
       .then(() => {
         localStorage.removeItem("token");
         localStorage.removeItem("email");
@@ -90,6 +90,14 @@ const SidebarComp = ({ notifications, leads, missedLeads }) => {
               </button>
             </div>
           ))}
+          {localStorage.getItem("role") === "Admin" && (
+            <button
+              onClick={() => (window.location.href = "/manage-user")}
+              className="py-2 px-2 text-xl text-white"
+            >
+              Manage User
+            </button>
+          )}
           <button
             onClick={handleLogout}
             className="py-2 px-2 text-xl text-white"

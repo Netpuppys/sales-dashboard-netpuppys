@@ -85,7 +85,7 @@ const TakeAction = ({ actionId, setActionId }) => {
 
     try {
       const response = await fetch(
-        `${BASEURL}/update-action/${id}`,
+        `${BASEURL}/api/forms/update-action/${id}`,
         requestOptions
       );
       const data = await response.json(); // Parse the response JSON

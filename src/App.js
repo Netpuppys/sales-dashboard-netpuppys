@@ -8,11 +8,14 @@ import FollowUpLeads from "./Component/FollowUpLeads/followUpLeads";
 import Dashboard from "./Component/Dashboard/dashboard";
 import FilterPage from "./Component/filterLead";
 import { ThreeDots } from "react-loader-spinner";
+import ChangePassword from "./Component/ChangePassword/changePassword";
+import ManageUser from "./Component/ManageUser/manageUser";
 function App() {
   const location = useLocation();
   // const navigate = useNavigate();
   const currentPath = location.pathname;
   const [leads, setLeads] = useState([]);
+  const [users, setUsers] = useState([]);
   const [notifications, setNotification] = useState([]);
   const [onboarded, setOnboarded] = useState([]);
   const [latestAction, setLatestAction] = useState([]);
@@ -26,7 +29,7 @@ function App() {
     const fetchLeads = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${BASEURL}/leads`);
+        const response = await fetch(`${BASEURL}/api/forms/leads`);
         const data = await response.json();
         if (response.ok) {
           // Sort the leads by 'createdAt' in descending order (newest first)
@@ -55,7 +58,7 @@ function App() {
     setLoading(true);
     const fetchLeads = async () => {
       try {
-        const response = await fetch(`${BASEURL}/notification`);
+        const response = await fetch(`${BASEURL}/api/forms/notification`);
         const data = await response.json();
         if (response.ok) {
           setLoading(false);
@@ -77,7 +80,7 @@ function App() {
     setLoading(true);
     const fetchLeads = async () => {
       try {
-        const response = await fetch(`${BASEURL}/onboard`);
+        const response = await fetch(`${BASEURL}/api/forms/onboard`);
         const data = await response.json();
         if (response.ok) {
           setLoading(false);
@@ -99,7 +102,7 @@ function App() {
     const fetchLeads = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${BASEURL}/close`);
+        const response = await fetch(`${BASEURL}/api/forms/close`);
         const data = await response.json();
         if (response.ok) {
           setLoading(false);
@@ -121,7 +124,7 @@ function App() {
     const fetchLeads = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${BASEURL}/latest-action`);
+        const response = await fetch(`${BASEURL}/api/forms/latest-action`);
         const data = await response.json();
         if (response.ok) {
           setLoading(false);
@@ -143,7 +146,7 @@ function App() {
     const fetchLeads = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${BASEURL}/`);
+        const response = await fetch(`${BASEURL}/api/forms/`);
         const data = await response.json();
         if (response.ok) {
           setLoading(false);
@@ -165,7 +168,29 @@ function App() {
     const fetchLeads = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${BASEURL}/missed-leads`);
+        const response = await fetch(`${BASEURL}/api/auth/get-users`);
+        const data = await response.json();
+        if (response.ok) {
+          setLoading(false);
+          setUsers(data);
+        } else {
+          setLoading(false);
+          console.error("Error fetching leads", data);
+        }
+      } catch (error) {
+        setLoading(false);
+        console.error("Error fetching leads:", error);
+      }
+    };
+
+    fetchLeads();
+  }, []);
+  useEffect(() => {
+    // Fetch leads from the backend API
+    const fetchLeads = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`${BASEURL}/api/forms/missed-leads`);
         const data = await response.json();
         if (response.ok) {
           setLoading(false);
@@ -259,6 +284,13 @@ function App() {
                   />
                 }
               />
+              <Route path="/change-password" element={<ChangePassword />} />
+            </Route>
+            <Route path="/" element={<ProtectedManageRoute />}>
+              <Route
+                path="/manage-user"
+                element={<ManageUser users={users} />}
+              />
             </Route>
           </Routes>
         </div>
@@ -283,6 +315,11 @@ const ProtectedRoute = () => {
   const token = localStorage.getItem("token");
 
   return token ? <Outlet /> : <Navigate to="/" replace />;
+};
+const ProtectedManageRoute = () => {
+  const role = localStorage.getItem("role");
+
+  return role === "Admin" ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 export default App;
