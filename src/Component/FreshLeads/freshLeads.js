@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import TakeAction from "../../ui/TakeAction";
 import { formatDate } from "../../utils/formatDate";
 import { formatTime } from "../../utils/formatTime";
+import { cleanPhoneNumber } from "../../utils/formatPhone";
+import { formatINRRange } from "../../utils/formatBudget";
 function FreshLeads({ leads }) {
   const [actionId, setActionId] = useState(null);
   const [expandedIndex, setExpandedIndex] = useState(null);
@@ -90,11 +92,13 @@ function FreshLeads({ leads }) {
                   </td>
                   <td className="p-3 underline text-blue-500">
                     <a
-                      href={`https://api.whatsapp.com/send?phone=91${lead.phone}`}
+                      href={`https://api.whatsapp.com/send?phone=91${cleanPhoneNumber(
+                        lead.phone
+                      )}`}
                       target="_blank"
                       rel="noreferrer noopener"
                     >
-                      {lead.phone}
+                      {cleanPhoneNumber(lead.phone)}
                     </a>
                   </td>
                   <td className="p-3">{lead.service}</td>
@@ -113,7 +117,7 @@ function FreshLeads({ leads }) {
                     </div>
                   </td>
                   <td className="p-3">{lead.website}</td>
-                  <td className="p-3">{lead.budget}</td>
+                  <td className="p-3">{formatINRRange(lead.budget)}</td>
                   <td className="p-3">{formatDate(lead.createdAt)}</td>
                   <td className="p-3">{formatTime(lead.createdAt)}</td>
                   <td className="p-3">{lead.startTime}</td>

@@ -3,6 +3,7 @@ import TakeAction from "../../ui/TakeAction";
 import ViewHistory from "../../ui/ViewHistory";
 import { formatDate } from "../../utils/formatDate";
 import { formatTime } from "../../utils/formatTime";
+import { cleanPhoneNumber } from "../../utils/formatPhone";
 
 function FollowUpLeads({ leads, heading, action = true, date = true }) {
   const [actionId, setActionId] = useState(null);
@@ -114,7 +115,7 @@ function FollowUpLeads({ leads, heading, action = true, date = true }) {
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
                   No. of Follow Ups Done
                 </th>
-                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                <th className="p-3 min-w-44 text-[#353535] font-medium">
                   View Follow Up History
                 </th>
 
@@ -203,11 +204,13 @@ function FollowUpLeads({ leads, heading, action = true, date = true }) {
                       </td>
                       <td className="p-3 underline text-blue-500">
                         <a
-                          href={`https://api.whatsapp.com/send?phone=91${lead.phone}`}
+                          href={`https://api.whatsapp.com/send?phone=91${cleanPhoneNumber(
+                            lead.phone
+                          )}`}
                           target="_blank"
                           rel="noreferrer noopener"
                         >
-                          {lead.phone}
+                          {cleanPhoneNumber(lead.phone)}
                         </a>
                       </td>
                       <td className="p-3">

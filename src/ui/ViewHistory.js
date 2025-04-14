@@ -1,6 +1,8 @@
 import React from "react";
 import { formatDate } from "../utils/formatDate";
 import { formatTime } from "../utils/formatTime";
+import { cleanPhoneNumber } from "../utils/formatPhone";
+import { formatINRRange } from "../utils/formatBudget";
 const ViewHistory = ({ historyId, setHistoryId }) => {
   return (
     <>
@@ -53,7 +55,9 @@ const ViewHistory = ({ historyId, setHistoryId }) => {
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Phone Number:-</span>{" "}
-                  <a href={`tel:${historyId.phone}`}>{historyId.phone}</a>
+                  <a href={`tel:${cleanPhoneNumber(historyId.phone)}`}>
+                    {cleanPhoneNumber(historyId.phone)}
+                  </a>
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Service:-</span>{" "}
@@ -69,7 +73,7 @@ const ViewHistory = ({ historyId, setHistoryId }) => {
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Budget:-</span>{" "}
-                  {historyId.budget}
+                  {formatINRRange(historyId.budget)}
                 </p>
                 <p>
                   <span className="text-lg font-semibold">Lead Date:-</span>{" "}
@@ -87,7 +91,7 @@ const ViewHistory = ({ historyId, setHistoryId }) => {
                   <span className="text-lg font-semibold">Designation:-</span>{" "}
                   {historyId.designation}
                 </p>
-                
+
                 <p>
                   <span className="text-lg font-semibold">Form Name:-</span>{" "}
                   {historyId.formName}
@@ -96,9 +100,9 @@ const ViewHistory = ({ historyId, setHistoryId }) => {
                   <span className="text-lg font-semibold">Source:-</span>{" "}
                   {historyId.source}
                 </p>
-                
               </div>
-              {historyId.action && Array.isArray(historyId.action) ? (
+              {historyId.action.length !== 0 &&
+              Array.isArray(historyId.action) ? (
                 <div className="pb-6 px-6 flex h-fit flex-col justify-start mx-auto bg-white rounded-lg">
                   {historyId.action
                     .sort(
@@ -178,8 +182,8 @@ const ViewHistory = ({ historyId, setHistoryId }) => {
                     ))}
                 </div>
               ) : (
-                <p className="p-6 text-center text-gray-500">
-                  No history available.
+                <p className="p-6 text-3xl text-center text-gray-500">
+                  No Action Taken
                 </p>
               )}
             </div>

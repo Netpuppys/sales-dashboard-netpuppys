@@ -2,15 +2,23 @@ import { useEffect, useState } from "react";
 import TakeAction from "../../ui/TakeAction";
 import { formatDate } from "../../utils/formatDate";
 import { formatTime } from "../../utils/formatTime";
+import { cleanPhoneNumber } from "../../utils/formatPhone";
+import { formatINRRange } from "../../utils/formatBudget";
+import ViewHistory from "../../ui/ViewHistory";
 function AllLeads({ leads }) {
   const [actionId, setActionId] = useState(null);
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [filteredLeads, setFilteredLeads] = useState([]);
+  const [historyId, setHistoryId] = useState(null);
 
   const handleAction = (id) => {
     setActionId(id);
+  };
+
+  const handleHistory = (lead) => {
+    setHistoryId(lead);
   };
 
   useEffect(() => {
@@ -83,9 +91,6 @@ function AllLeads({ leads }) {
           <table className="table-auto relative border-collapse w-full text-left bg-white shadow-md rounded-md">
             <thead className="bg-[#ececec] border-b border-[#696969] text-sm">
               <tr>
-                <th className="p-3 min-w-40 text-[#353535] font-medium">
-                  Take Action
-                </th>
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Name
                 </th>
@@ -94,6 +99,12 @@ function AllLeads({ leads }) {
                 </th>
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Phone Number
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Lead Date
+                </th>
+                <th className="p-3 min-w-60 text-[#353535] font-medium">
+                  Lead Time
                 </th>
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Service
@@ -107,11 +118,14 @@ function AllLeads({ leads }) {
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Budget
                 </th>
-                <th className="p-3 min-w-60 text-[#353535] font-medium">
-                  Lead Date
+                <th className="p-3 min-w-40 text-[#353535] font-medium">
+                  Take Action
                 </th>
-                <th className="p-3 min-w-60 text-[#353535] font-medium">
-                  Lead Time
+                <th className="p-3 min-w-40 text-[#353535] font-medium">
+                  View History
+                </th>
+                <th className="p-3 min-w-44 text-[#353535] font-medium">
+                  No. of Follow Ups Done
                 </th>
                 <th className="p-3 min-w-60 text-[#353535] font-medium">
                   Start Time
@@ -130,27 +144,23 @@ function AllLeads({ leads }) {
             <tbody className="text-gray-900">
               {filteredLeads.map((lead, index) => (
                 <tr key={index} className="border-b hover:bg-[#ececec] text-sm">
-                  <td className="p-3">
-                    <button
-                      onClick={() => handleAction(lead._id)}
-                      className="px-4 py-2 disabled:bg-[#E1E3EA] disabled:border-[#E1E3EA] disabled:text-white hover:bg-transparent hover:text-accent-blue border border-accent-blue text-white text-nowrap bg-accent-blue rounded-lg font-medium leading-[1.25rem] text-sm"
-                    >
-                      Take Action
-                    </button>
-                  </td>
                   <td className="p-3">{lead.name}</td>
                   <td className="p-3 underline text-blue-500">
                     <a href={`mailto:${lead.email}`}>{lead.email}</a>
                   </td>
                   <td className="p-3 underline text-blue-500">
                     <a
-                      href={`https://api.whatsapp.com/send?phone=91${lead.phone}`}
+                      href={`https://api.whatsapp.com/send?phone=91${cleanPhoneNumber(
+                        lead.phone
+                      )}`}
                       target="_blank"
                       rel="noreferrer noopener"
                     >
-                      {lead.phone}
+                      {cleanPhoneNumber(lead.phone)}
                     </a>
                   </td>
+                  <td className="p-3">{formatDate(lead.createdAt)}</td>
+                  <td className="p-3">{formatTime(lead.createdAt)}</td>
                   <td className="p-3">{lead.service}</td>
                   <td
                     className="p-3 cursor-pointer text-sm"
@@ -167,9 +177,22 @@ function AllLeads({ leads }) {
                     </div>
                   </td>
                   <td className="p-3">{lead.website}</td>
-                  <td className="p-3">{lead.budget}</td>
-                  <td className="p-3">{formatDate(lead.createdAt)}</td>
-                  <td className="p-3">{formatTime(lead.createdAt)}</td>
+                  <td className="p-3">{formatINRRange(lead.budget)}</td>
+                  <td className="p-3">
+                    <button
+                      onClick={() => handleAction(lead._id)}
+                      className="px-4 py-2 disabled:bg-[#E1E3EA] disabled:border-[#E1E3EA] disabled:text-white hover:bg-transparent hover:text-accent-blue border border-accent-blue text-white text-nowrap bg-accent-blue rounded-lg font-medium leading-[1.25rem] text-sm"
+                    >
+                      Take Action
+                    </button>
+                  </td>
+                  <th
+                    onClick={() => handleHistory(lead)}
+                    className="p-3 text-blue-500 underline cursor-pointer"
+                  >
+                    View History
+                  </th>
+                  <th className="p-3">{lead.action.length}</th>
                   <td className="p-3">{lead.startTime}</td>
                   <td className="p-3">{lead.designation}</td>
                   <td className="p-3">{lead.formName}</td>
@@ -179,6 +202,9 @@ function AllLeads({ leads }) {
             </tbody>
           </table>
         </div>
+        {historyId && (
+          <ViewHistory historyId={historyId} setHistoryId={setHistoryId} />
+        )}
         {actionId && (
           <TakeAction actionId={actionId} setActionId={setActionId} />
         )}
