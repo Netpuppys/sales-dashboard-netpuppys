@@ -10,6 +10,7 @@ import FilterPage from "./Component/filterLead";
 import { ThreeDots } from "react-loader-spinner";
 import ChangePassword from "./Component/ChangePassword/changePassword";
 import ManageUser from "./Component/ManageUser/manageUser";
+import AllLeads from "./Component/AllLeads/allLeads";
 function App() {
   const location = useLocation();
   // const navigate = useNavigate();
@@ -34,9 +35,11 @@ function App() {
         if (response.ok) {
           // Sort the leads by 'createdAt' in descending order (newest first)
           setLoading(false);
-          const sortedLeads = data.sort(
-            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-          );
+          const sortedLeads = data
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .filter(
+              (lead) => Array.isArray(lead.action) && lead.action.length === 0
+            );
           // Set the sorted leads data
           setLeads(sortedLeads);
         } else {
@@ -150,7 +153,9 @@ function App() {
         const data = await response.json();
         if (response.ok) {
           setLoading(false);
-          setAllLeads(data);
+          setAllLeads(
+            data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          );
         } else {
           setLoading(false);
           console.error("Error fetching leads", data);
@@ -228,7 +233,7 @@ function App() {
                 element={
                   <Dashboard
                     notifications={notifications}
-                    leads={leads}
+                    leads={allLeads}
                     allLeads={allLeads}
                     latestAction={latestAction}
                     missedLeads={missedLeads}
@@ -240,9 +245,13 @@ function App() {
                 element={<FreshLeads leads={leads} setLeads={setLeads} />}
               />
               <Route
+                path="/all-leads"
+                element={<AllLeads leads={allLeads} />}
+              />
+              <Route
                 path="/follow-up-leads"
                 element={
-                  <FollowUpLeads leads={leads} heading={"Follow Up Leads"} />
+                  <FollowUpLeads leads={allLeads} heading={"Follow Up Leads"} />
                 }
               />
               <Route

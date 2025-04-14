@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TakeAction from "../../ui/TakeAction";
 import { formatDate } from "../../utils/formatDate";
 import { formatTime } from "../../utils/formatTime";
-function FreshLeads({ leads }) {
+function AllLeads({ leads }) {
   const [actionId, setActionId] = useState(null);
   const [expandedIndex, setExpandedIndex] = useState(null);
   const handleAction = (id) => {
@@ -133,4 +133,4 @@ function FreshLeads({ leads }) {
   );
 }
 
-export default FreshLeads;
+export default AllLeads;

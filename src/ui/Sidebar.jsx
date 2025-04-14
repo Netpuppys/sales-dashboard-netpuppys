@@ -90,6 +90,14 @@ const SidebarComp = ({ notifications, leads, missedLeads }) => {
               </button>
             </div>
           ))}
+          {localStorage.getItem("role") !== "Sales" && (
+            <button
+              onClick={() => (window.location.href = "/all-leads")}
+              className="py-2 px-2 text-xl text-white"
+            >
+              All Leads
+            </button>
+          )}
           {localStorage.getItem("role") === "Admin" && (
             <button
               onClick={() => (window.location.href = "/manage-user")}
