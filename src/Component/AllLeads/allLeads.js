@@ -5,9 +5,17 @@ import { formatTime } from "../../utils/formatTime";
 function AllLeads({ leads }) {
   const [actionId, setActionId] = useState(null);
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [filteredLeads, setFilteredLeads] = useState([]);
+
   const handleAction = (id) => {
     setActionId(id);
   };
+
+  useEffect(() => {
+    setFilteredLeads(leads);
+  }, [leads]);
 
   useEffect(() => {
     if (actionId) {
@@ -19,11 +27,57 @@ function AllLeads({ leads }) {
       document.body.style.overflow = "auto";
     };
   }, [actionId]);
+
+  const handleFilter = () => {
+    let filtered = leads;
+    if (fromDate > toDate) {
+      alert("From date cannot be greater than to date");
+      return;
+    }
+    const from = fromDate ? new Date(fromDate).setHours(0, 0, 0, 0) : null;
+    const to = toDate ? new Date(toDate).setHours(0, 0, 0, 0) : null;
+
+    filtered = filtered.filter((lead) => {
+      const actionDate = new Date(lead.createdAt).setHours(0, 0, 0, 0);
+
+      return (!from || actionDate >= from) && (!to || actionDate <= to);
+    });
+
+    setFilteredLeads(filtered);
+  };
   return (
     <div className="w-full py-10 px-6 h-full">
-      <h3 className="text-3xl font-bold text-center mb-5">
-        {leads.length} Fresh Leads
-      </h3>
+      <div className="w-full h-full flex justify-between items-center">
+        <h3 className="text-3xl font-bold text-center mb-5">
+          {filteredLeads.length} Leads
+        </h3>
+        <div className="flex justify-center items-center gap-4">
+          <label className="text-[#353535] font-medium">Date Range From</label>
+          <input
+            type="date"
+            className="border border-black px-4 py-1 focus:outline-none"
+            value={fromDate}
+            max={new Date().toISOString().split("T")[0]}
+            onChange={(e) => setFromDate(e.target.value)}
+          />
+          <label className="text-[#353535] font-medium">To</label>
+          <input
+            type="date"
+            className="border border-black px-4 py-1 focus:outline-none"
+            value={toDate}
+            min={fromDate}
+            max={new Date().toISOString().split("T")[0]}
+            onChange={(e) => setToDate(e.target.value)}
+          />
+          <button
+            type="submit"
+            onClick={handleFilter}
+            className="px-4 py-2 disabled:bg-[#E1E3EA] disabled:border-[#E1E3EA] disabled:text-white hover:bg-transparent hover:text-accent-blue border border-accent-blue text-white text-nowrap bg-accent-blue rounded-lg font-medium leading-[1.25rem] text-sm"
+          >
+            Search
+          </button>
+        </div>
+      </div>
       <div className="w-full">
         <div className="overflow-x-auto w-full mt-3">
           <table className="table-auto relative border-collapse w-full text-left bg-white shadow-md rounded-md">
@@ -74,7 +128,7 @@ function AllLeads({ leads }) {
               </tr>
             </thead>
             <tbody className="text-gray-900">
-              {leads.map((lead, index) => (
+              {filteredLeads.map((lead, index) => (
                 <tr key={index} className="border-b hover:bg-[#ececec] text-sm">
                   <td className="p-3">
                     <button
