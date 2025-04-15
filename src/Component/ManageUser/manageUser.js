@@ -2,16 +2,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import BASEURL from "../../BaseURL";
 import CreateUser from "../../ui/CreateUser";
+import { toast } from "react-toastify";
 function ManageUser({ users }) {
   const [createUser, setCreateUser] = useState(null);
 
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(`${BASEURL}/api/auth/delete-user/${id}`);
-      alert(res.data.message); // Show success message
+      toast.success(res.data.message); // Show success message
       window.location.reload();
     } catch (error) {
-      alert(error.response.data.error); // Show error message
+      toast.error(error.response.data.error); // Show error message
     }
   };
 

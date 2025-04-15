@@ -4,6 +4,7 @@ import ViewHistory from "../../ui/ViewHistory";
 import { formatDate } from "../../utils/formatDate";
 import { formatTime } from "../../utils/formatTime";
 import { cleanPhoneNumber } from "../../utils/formatPhone";
+import { toast } from "react-toastify";
 
 function FollowUpLeads({ leads, heading, action = true, date = true }) {
   const [actionId, setActionId] = useState(null);
@@ -37,7 +38,7 @@ function FollowUpLeads({ leads, heading, action = true, date = true }) {
   const handleFilter = () => {
     let filtered = leads;
     if (fromDate > toDate) {
-      alert("From date cannot be greater than to date");
+      toast.error("From date cannot be greater than to date");
       return;
     }
     const from = fromDate ? new Date(fromDate).setHours(0, 0, 0, 0) : null;

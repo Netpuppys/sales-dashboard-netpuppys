@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import BASEURL from "../../BaseURL";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
-import passwordIcon from "../../Assets/password.png";
 import show from "../../Assets/show.png";
 import hide from "../../Assets/hide.png";
+import { toast } from "react-toastify";
 function ChangePassword() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -37,7 +37,7 @@ function ChangePassword() {
 
   const handleSubmit = async () => {
     if (!email || !oldPassword || !newPassword) {
-      alert("Please fill all fields");
+      toast.error("Please fill all fields");
       return;
     }
 
@@ -50,15 +50,15 @@ function ChangePassword() {
       });
 
       if (response.status === 200) {
-        alert("Password changed successfully!");
+        toast.success("Password changed successfully!");
         setOldPassword("");
         setNewPassword("");
       }
     } catch (error) {
       if (error) {
-        alert(error.response.data.error);
+        toast.error(error.response.data.error);
       } else {
-        alert("Network error");
+        toast.error("Network error");
       }
     } finally {
       setLoading(false);

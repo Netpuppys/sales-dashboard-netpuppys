@@ -6,6 +6,7 @@ import logo from "../Assets/logoBlack.png";
 import { ThreeDots } from "react-loader-spinner";
 import show from "../Assets/show.png";
 import hide from "../Assets/hide.png";
+import { toast } from "react-toastify";
 function Login() {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,18 +45,12 @@ function Login() {
         localStorage.setItem("role", response.data.role);
         // Handle any success response if needed
         setLoading(false);
-        alert(`Welcome ${localStorage.getItem("name")}`, {
-          position: "top-center",
-          autoClose: 3000,
-        });
+        toast.success(`Welcome ${localStorage.getItem("name")}`);
         navigate("/dashboard");
       })
       .catch((error) => {
         setLoading(false);
-        alert("Incorrect email or Password. Try again.", {
-          position: "top-center",
-          autoClose: 3000,
-        });
+        toast.error("Incorrect email or Password. Try again.");
         console.error("Login failed", error); // Handle any error response if needed
       });
   };

@@ -4,6 +4,7 @@ import { ThreeDots } from "react-loader-spinner";
 import show from "../Assets/show.png";
 import hide from "../Assets/hide.png";
 import axios from "axios";
+import { toast } from "react-toastify";
 const CreateUser = ({ createUser, setCreateUser }) => {
   const [loading, setLoading] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -39,7 +40,7 @@ const CreateUser = ({ createUser, setCreateUser }) => {
       );
 
       if (response.data.message) {
-        alert(response.data.message); // Show alert with the success message
+        toast.success(response.data.message); // Show alert with the success message
       }
       setLoading(false);
       setFormData({

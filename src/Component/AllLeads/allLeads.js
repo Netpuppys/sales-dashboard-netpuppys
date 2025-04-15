@@ -5,6 +5,7 @@ import { formatTime } from "../../utils/formatTime";
 import { cleanPhoneNumber } from "../../utils/formatPhone";
 import { formatINRRange } from "../../utils/formatBudget";
 import ViewHistory from "../../ui/ViewHistory";
+import { toast } from "react-toastify";
 function AllLeads({ leads }) {
   const [actionId, setActionId] = useState(null);
   const [expandedIndex, setExpandedIndex] = useState(null);
@@ -39,7 +40,7 @@ function AllLeads({ leads }) {
   const handleFilter = () => {
     let filtered = leads;
     if (fromDate > toDate) {
-      alert("From date cannot be greater than to date");
+      toast.error("From date cannot be greater than to date");
       return;
     }
     const from = fromDate ? new Date(fromDate).setHours(0, 0, 0, 0) : null;

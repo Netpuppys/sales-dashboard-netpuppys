@@ -11,6 +11,8 @@ import { ThreeDots } from "react-loader-spinner";
 import ChangePassword from "./Component/ChangePassword/changePassword";
 import ManageUser from "./Component/ManageUser/manageUser";
 import AllLeads from "./Component/AllLeads/allLeads";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 function App() {
   const location = useLocation();
   // const navigate = useNavigate();
@@ -314,7 +316,7 @@ function App() {
           </div>
         </div>
       )}
-
+      <ToastContainer closeOnClick={true} closeButton />
       {/* Logout button (visible only when logged in) */}
     </>
   );

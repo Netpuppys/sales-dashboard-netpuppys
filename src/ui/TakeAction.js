@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import BASEURL from "../BaseURL";
 import { ThreeDots } from "react-loader-spinner";
+import { toast } from "react-toastify";
 const TakeAction = ({ actionId, setActionId }) => {
   const [remarksPlaceholder, setRemarksPlaceholder] = useState("Notes");
   const [nextFollowUpDate, setNextFollowUpDate] = useState("");
@@ -54,7 +55,7 @@ const TakeAction = ({ actionId, setActionId }) => {
   const handleSubmit = async (e, id) => {
     e.preventDefault();
     if (formData.nextFollowUp === "calendar" && !nextFollowUpDate) {
-      alert("Please select a follow-up date.");
+      toast.error("Please select a follow-up date.");
       return;
     }
     setLoading(true);
@@ -91,7 +92,7 @@ const TakeAction = ({ actionId, setActionId }) => {
       const data = await response.json(); // Parse the response JSON
 
       if (data.message) {
-        alert(data.message); // Show alert with the success message
+        toast.success(data.message); // Show alert with the success message
       }
 
       setLoading(false);
