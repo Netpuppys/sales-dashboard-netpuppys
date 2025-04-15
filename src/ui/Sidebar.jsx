@@ -31,7 +31,7 @@ const SidebarComp = ({ notifications, leads, missedLeads }) => {
 
   return (
     <div className={`fixed w-60 top-0 h-screen bg-[#1d1d1d]`}>
-      <div className="w-full h-full relative">
+      <div className="w-full h-full overflow-y-scroll relative">
         <div className="w-full h-fit border-b-2 border-[#fff] flex items-center justify-start gap-4 px-8">
           <img src={logo} alt="" className="w-fit mx-auto h-fit" />
         </div>
